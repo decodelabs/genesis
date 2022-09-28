@@ -1,5 +1,4 @@
 parameters:
     paths:
         - src/
-        - stubs/
     level: max
