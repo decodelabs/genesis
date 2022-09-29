@@ -14,7 +14,7 @@
         "decodelabs/archetype": "^0.2.5",
         "decodelabs/exceptional": "^0.4",
         "decodelabs/pandora": "^0.2.3",
-        "decodelabs/veneer": "^0.10.7"
+        "decodelabs/veneer": "^0.10.10"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
