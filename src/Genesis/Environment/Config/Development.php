@@ -13,10 +13,7 @@ class Development extends Testing
 {
     public const DEFAULT_NAME = 'development';
 
-    public function getUmask(): ?int
-    {
-        return 0;
-    }
+    protected ?int $umask = 0;
 
     public function getErrorReporting(): ?int
     {

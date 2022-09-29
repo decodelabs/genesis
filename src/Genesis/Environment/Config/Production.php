@@ -16,6 +16,8 @@ class Production implements Config
     public const DEFAULT_NAME = 'production';
 
     protected ?string $name = null;
+    protected ?int $umask = null;
+    protected ?bool $displayErrors = null;
 
     public function __construct(?string $name = null)
     {
@@ -32,9 +34,14 @@ class Production implements Config
         return static::DEFAULT_NAME;
     }
 
+    public function setUmask(?int $umask): void
+    {
+        $this->umask = $umask;
+    }
+
     public function getUmask(): ?int
     {
-        return null;
+        return $this->umask;
     }
 
     public function getErrorReporting(): ?int
@@ -42,9 +49,14 @@ class Production implements Config
         return E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED;
     }
 
+    public function setDisplayErrors(?bool $errors): void
+    {
+        $this->displayErrors = $errors;
+    }
+
     public function getDisplayErrors(): ?bool
     {
-        return false;
+        return $this->displayErrors;
     }
 
     public function getDefaultTimezone(): ?string
