@@ -13,13 +13,10 @@ class Testing extends Production
 {
     public const DEFAULT_NAME = 'testing';
 
+    protected ?bool $displayErrors = true;
+
     public function getErrorReporting(): ?int
     {
         return E_ALL & ~E_NOTICE & ~E_STRICT;
-    }
-
-    public function getDisplayErrors(): ?bool
-    {
-        return true;
     }
 }
