@@ -19,14 +19,6 @@ class Stack implements Loader
     protected array $loaders = [];
 
     /**
-     * Construct registers as spl_autoloader
-     */
-    public function __construct()
-    {
-        spl_autoload_register([$this, 'loadClass'], true, true);
-    }
-
-    /**
      * Top priority
      */
     public function getPriority(): int
@@ -36,6 +28,10 @@ class Stack implements Loader
 
     public function registerLoader(Loader $loader): void
     {
+        if (empty($this->loaders)) {
+            spl_autoload_register([$this, 'loadClass'], true, true);
+        }
+
         $this->loaders[get_class($loader)] = $loader;
 
         uasort($this->loaders, function (Loader $a, Loader $b) {
@@ -46,6 +42,10 @@ class Stack implements Loader
     public function unregisterLoader(Loader $loader): void
     {
         unset($this->loaders[get_class($loader)]);
+
+        if (empty($this->loaders)) {
+            spl_autoload_unregister([$this, 'loadClass']);
+        }
     }
 
     /**

@@ -11,20 +11,19 @@ namespace DecodeLabs\Genesis;
 
 use Exception;
 
-final class Bootstrap
+abstract class Bootstrap
 {
     /**
      * Bootstrap and run the app
      */
-    public function run(
-        BootstrapHandler $handler
-    ): void {
+    final public function run(): void
+    {
         // Lookup best choice vendor path
         $vendorPath = $this->findRoot(
-            $handler->getRootSearchPaths()
+            $this->getRootSearchPaths()
         );
 
-        $handler->execute($vendorPath);
+        $this->execute($vendorPath);
     }
 
 
@@ -33,7 +32,7 @@ final class Bootstrap
      *
      * @param array<string, string> $paths
      */
-    public function findRoot(array $paths): string
+    final public function findRoot(array $paths): string
     {
         foreach ($paths as $testFile => $vendorPath) {
             if (file_exists($testFile)) {
@@ -50,14 +49,12 @@ final class Bootstrap
 
         throw new Exception('No root vendor installation found');
     }
-}
 
-interface BootstrapHandler
-{
+
     /**
      * @return array<string, string>
      */
-    public function getRootSearchPaths(): array;
+    abstract public function getRootSearchPaths(): array;
 
-    public function execute(string $vendorPath): void;
+    abstract public function execute(string $vendorPath): void;
 }

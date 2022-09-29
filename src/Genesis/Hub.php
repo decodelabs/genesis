@@ -29,6 +29,9 @@ interface Hub
      */
     public function getApplicationPath(): string;
 
+    /**
+     * Register custom loaders into the stack
+     */
     public function initializeLoaders(StackLoader $loader): void;
 
     /**
