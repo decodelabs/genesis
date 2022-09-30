@@ -108,6 +108,7 @@ class Context
 
         // Kernel
         $this->kernel = $this->hub->loadKernel();
+        $this->kernel->initialize();
     }
 
 
