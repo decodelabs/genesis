@@ -22,7 +22,7 @@ interface Config
     /**
      * @return value-of<self::RUN_MODES>|null
      */
-    public function getRunMode(): ?string;
+    public function getMode(): ?string;
 
     public function getUmask(): ?int;
     public function getErrorReporting(): ?int;
