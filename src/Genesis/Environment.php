@@ -18,7 +18,7 @@ class Environment
     /**
      * @phpstan-var value-of<EnvConfig::RUN_MODES>
      */
-    protected string $runMode = 'production';
+    protected string $mode = 'production';
 
     /**
      * Init with config
@@ -29,7 +29,7 @@ class Environment
         $this->name = $config->getEnvironmentName() ?? $this->name;
 
         // Run mode
-        $this->runMode = $config->getRunMode() ?? $this->runMode;
+        $this->mode = $config->getMode() ?? $this->mode;
 
         // Umask
         if (null !== ($umask = $config->getUmask())) {
@@ -68,9 +68,9 @@ class Environment
      *
      * @phpstan-return value-of<EnvConfig::RUN_MODES>
      */
-    public function getRunMode(): string
+    public function getMode(): string
     {
-        return $this->runMode;
+        return $this->mode;
     }
 
     /**
@@ -78,15 +78,17 @@ class Environment
      */
     public function isDevelopment(): bool
     {
-        return $this->runMode === 'development';
+        return $this->mode === 'development';
     }
 
     /**
-     * Is running in testing mode
+     * Is running in testing mode (or development)
      */
     public function isTesting(): bool
     {
-        return $this->runMode === 'testing';
+        return
+            $this->mode === 'testing' ||
+            $this->mode === 'development';
     }
 
     /**
@@ -94,6 +96,6 @@ class Environment
      */
     public function isProduction(): bool
     {
-        return $this->runMode === 'production';
+        return $this->mode === 'production';
     }
 }

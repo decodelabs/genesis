@@ -30,6 +30,21 @@ interface Hub
     public function getApplicationPath(): string;
 
     /**
+     * Get local data path
+     */
+    public function getLocalDataPath(): string;
+
+    /**
+     * Get shared data path
+     */
+    public function getSharedDataPath(): string;
+
+    /**
+     * Get application name
+     */
+    public function getApplicationName(): string;
+
+    /**
      * Register custom loaders into the stack
      */
     public function initializeLoaders(StackLoader $loader): void;

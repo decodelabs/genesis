@@ -29,7 +29,7 @@ class Production implements Config
         return $this->name ?? static::DEFAULT_NAME;
     }
 
-    public function getRunMode(): ?string
+    public function getMode(): ?string
     {
         return static::DEFAULT_NAME;
     }
