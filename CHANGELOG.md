@@ -1,3 +1,6 @@
+## v0.4.0 (2022-09-30)
+* Updated kernel interface
+
 ## v0.3.0 (2022-09-30)
 * Updated Environment and Hub interfaces
 
