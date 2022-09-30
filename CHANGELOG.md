@@ -1,3 +1,6 @@
+## v0.2.1 (2022-09-30)
+* Set build compiled if build time set
+
 ## v0.2.0 (2022-09-30)
 * Added basic build info to context
 
