@@ -11,6 +11,7 @@ use DecodeLabs\Genesis\Context as Inst;
 use DecodeLabs\Pandora\Container as ContainerPlugin;
 use DecodeLabs\Genesis\Loader\Stack as LoaderPlugin;
 use DecodeLabs\Genesis\Hub as HubPlugin;
+use DecodeLabs\Genesis\Build as BuildPlugin;
 use DecodeLabs\Genesis\Environment as EnvironmentPlugin;
 use DecodeLabs\Genesis\Kernel as KernelPlugin;
 use DecodeLabs\Veneer\Plugin\Wrapper as PluginWrapper;
@@ -27,6 +28,8 @@ class Genesis implements Proxy
     public static LoaderPlugin $loader;
     /** @var HubPlugin|PluginWrapper<HubPlugin> $hub */
     public static HubPlugin|PluginWrapper $hub;
+    /** @var BuildPlugin|PluginWrapper<BuildPlugin> $build */
+    public static BuildPlugin|PluginWrapper $build;
     /** @var EnvironmentPlugin|PluginWrapper<EnvironmentPlugin> $environment */
     public static EnvironmentPlugin|PluginWrapper $environment;
     /** @var KernelPlugin|PluginWrapper<KernelPlugin> $kernel */

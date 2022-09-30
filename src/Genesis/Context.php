@@ -33,6 +33,10 @@ class Context
 
     #[Plugin]
     #[LazyLoad]
+    public Build $build;
+
+    #[Plugin]
+    #[LazyLoad]
     public Environment $environment;
 
     #[Plugin]
@@ -89,6 +93,9 @@ class Context
         // Load hub
         $class = Archetype::resolve(Hub::class, $hubName);
         $this->hub = new $class($this, $options);
+
+        // Build info
+        $this->build = $this->hub->loadBuild();
 
         // Loaders
         $this->hub->initializeLoaders($this->loader);
