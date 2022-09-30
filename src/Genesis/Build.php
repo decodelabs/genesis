@@ -18,6 +18,9 @@ class Build
     protected int $cacheBuster;
     protected Context $context;
 
+    /**
+     * @param ?int $time Time the active app was built - if running from source, pass null
+     */
     public function __construct(
         Context $context,
         string $path,
@@ -26,6 +29,7 @@ class Build
         $this->context = $context;
         $this->path = $path;
         $this->time = $time;
+        $this->compiled = $time !== null;
     }
 
     /**
