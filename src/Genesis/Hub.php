@@ -35,6 +35,11 @@ interface Hub
     public function initializeLoaders(StackLoader $loader): void;
 
     /**
+     * Load build info
+     */
+    public function loadBuild(): Build;
+
+    /**
      * Load object to convey environment configuration
      */
     public function loadEnvironmentConfig(): EnvConfig;
