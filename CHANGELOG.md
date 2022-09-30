@@ -1,3 +1,6 @@
+## v0.3.0 (2022-09-30)
+* Updated Environment and Hub interfaces
+
 ## v0.2.1 (2022-09-30)
 * Set build compiled if build time set
 
