@@ -12,8 +12,11 @@
         "php": "^8.0",
 
         "decodelabs/archetype": "^0.2.5",
+        "decodelabs/atlas": "^0.10.5",
         "decodelabs/exceptional": "^0.4",
+        "decodelabs/glitch-support": "^0.4.1",
         "decodelabs/pandora": "^0.2.3",
+        "decodelabs/terminus": "^0.9.0",
         "decodelabs/veneer": "^0.10.10"
     },
     "require-dev": {
