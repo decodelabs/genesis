@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis;
 
+use DecodeLabs\Exceptional;
+use DecodeLabs\Genesis\Build\Handler;
+
 class Build
 {
     public ?int $time = null;
@@ -85,5 +88,24 @@ class Build
     public function isSource(): bool
     {
         return !$this->compiled;
+    }
+
+
+    /**
+     * Get Handler
+     */
+    public function getHandler(): Handler
+    {
+        static $handler;
+
+        if (!isset($handler)) {
+            if (null === ($manifest = $this->context->hub->getBuildManifest())) {
+                throw Exceptional::Setup('Hub does not provide a build manifest');
+            }
+
+            $handler = new Handler($manifest);
+        }
+
+        return $handler;
     }
 }

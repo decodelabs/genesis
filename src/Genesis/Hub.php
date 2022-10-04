@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis;
 
+use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 
@@ -68,4 +69,9 @@ interface Hub
      * Load kernel to handle running the app
      */
     public function loadKernel(): Kernel;
+
+    /**
+     * Get build manifest
+     */
+    public function getBuildManifest(): ?BuildManifest;
 }
