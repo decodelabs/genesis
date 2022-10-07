@@ -112,7 +112,7 @@ require_once 'path/to/my/classes/Bootstrap.php';
 (new My\App\Bootstrap()->run());
 ```
 
-This way, if a build is not found, the default behaviour is to keep running from app source.
+This way, your entry defers any work to the Bootstrap class - your Bootstrap being the only thing that needs to load before composer, and won't need to change between application deployments.
 
 
 ## Build tasks

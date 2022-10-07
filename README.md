@@ -43,6 +43,7 @@ namespace DecodeLabs\Genesis;
 
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
+use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 
 interface Hub
 {
@@ -60,7 +61,7 @@ interface Hub
 ```
 
 The hub provides access to all of the critical information and structures needed to get the app running.
-Once instantiated, the hub can be access via the Genesis Veneer frontage:
+Once instantiated, the hub can be accessed via the Genesis Veneer frontage:
 
 ```php
 $appPath = Genesis::$hub->getApplicationPath();
@@ -133,7 +134,7 @@ Genesis supports an advanced build compilation process which can be used for iso
 
 Compiled builds are a complex topic due to the necessity of locating the correct build folder before loading _any_ other code and needing to seamlessly deploy updates without unwittingly mixing different versions of libraries during execution.
 
-Full details of [how to work with compiled build can be found here](docs/builds.md).
+Full details of [how to work with compiled builds can be found here](docs/builds.md).
 
 ## Licensing
 
