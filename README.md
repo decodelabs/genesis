@@ -7,7 +7,13 @@
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-44CC11.svg?longCache=true&style=flat)](https://github.com/phpstan/phpstan)
 [![License](https://img.shields.io/packagist/l/decodelabs/genesis?style=flat)](https://packagist.org/packages/decodelabs/genesis)
 
-Universal bootstrapping framework for PHP applications
+### Universal bootstrapping framework for PHP applications
+
+Genesis provides everything you need to bootstrap your application at runtime. Take the guesswork out of how best to structure the lowest level code in your framework and app.
+
+_Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com)._
+
+---
 
 
 ## Installation
