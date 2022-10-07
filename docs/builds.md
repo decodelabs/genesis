@@ -124,7 +124,7 @@ In the body of your task (assuming your app is bootstrapped and running some sor
 Genesis::$build->getHandler()->run();
 ```
 
-This call will work its way through the process, consuming all of the information your `BuildManifest` feeds it, and generating an active build folder.
+This call will work its way through the process, consuming all of the information your `BuildManifest` supplies it, and generates an active build folder.
 
 Your clear-build task should include:
 
