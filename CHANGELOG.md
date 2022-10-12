@@ -1,3 +1,6 @@
+## v0.6.1 (2022-10-12)
+* Removed intiializeErrorHandler from Hub
+
 ## v0.6.0 (2022-10-12)
 * Updated initialisation interface
 

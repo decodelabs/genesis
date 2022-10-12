@@ -54,7 +54,7 @@ interface Hub
     public function initializeLoaders(StackLoader $loader): void;
     public function loadBuild(): Build;
     public function loadEnvironmentConfig(): EnvConfig;
-    public function initializeErrorHandler(): void;
+    public function initializePlatform(): void;
     public function loadKernel(): Kernel;
     public function getBuildManifest(): ?BuildManifest;
 }
