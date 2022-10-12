@@ -61,11 +61,6 @@ interface Hub
     public function loadEnvironmentConfig(): EnvConfig;
 
     /**
-     * Setup error handler system
-     */
-    public function initializeErrorHandler(): void;
-
-    /**
      * Setup platform libraries
      */
     public function initializePlatform(): void;
