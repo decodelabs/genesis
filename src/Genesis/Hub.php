@@ -66,6 +66,11 @@ interface Hub
     public function initializeErrorHandler(): void;
 
     /**
+     * Setup platform libraries
+     */
+    public function initializePlatform(): void;
+
+    /**
      * Load kernel to handle running the app
      */
     public function loadKernel(): Kernel;
