@@ -103,8 +103,8 @@ class Context
         // Init environment
         $this->environment = new Environment($this->hub->loadEnvironmentConfig());
 
-        // Error handler
-        $this->hub->initializeErrorHandler();
+        // Platform
+        $this->hub->initializePlatform();
 
         // Kernel
         $this->kernel = $this->hub->loadKernel();
