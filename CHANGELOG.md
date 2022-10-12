@@ -1,3 +1,6 @@
+## v0.6.0 (2022-10-12)
+* Updated initialisation interface
+
 ## v0.5.0 (2022-10-04)
 * Added BuildManifest to Hub interface
 
