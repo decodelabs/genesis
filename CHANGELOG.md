@@ -1,3 +1,6 @@
+## v0.6.2 (2022-11-01)
+* Added node exists check to build process
+
 ## v0.6.1 (2022-10-12)
 * Removed intiializeErrorHandler from Hub
 
