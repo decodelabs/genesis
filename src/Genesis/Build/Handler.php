@@ -155,6 +155,12 @@ class Handler
             foreach ($this->manifest->scanPackage($package) as $node => $location) {
                 $session->write(' - ');
                 $session->{'cyan'}(Glitch::normalizePath((string)$node));
+
+                if (!$node->exists()) {
+                    $session->{'.brightRed'}(' skipped');
+                    continue;
+                }
+
                 $session->{'.white'}(' ' . $location);
 
                 $location = ltrim($location, '/');
