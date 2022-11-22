@@ -1,3 +1,8 @@
+## v0.7.0 (2022-11-22)
+* Added fluidity cast to Hub
+* Migrated to use effigy in CI workflow
+* Fixed PHP8.1 testing
+
 ## v0.6.2 (2022-11-01)
 * Added node exists check to build process
 
