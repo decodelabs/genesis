@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis;
 
+use DecodeLabs\Fluidity\Cast;
 use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 
-interface Hub
+interface Hub extends Cast
 {
     /**
      * Init with options
