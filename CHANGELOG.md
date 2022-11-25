@@ -1,3 +1,6 @@
+## v0.7.1 (2022-11-25)
+* Added FileTemplate base
+
 ## v0.7.0 (2022-11-22)
 * Added fluidity cast to Hub
 * Migrated to use effigy in CI workflow
