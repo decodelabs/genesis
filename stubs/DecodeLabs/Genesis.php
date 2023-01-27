@@ -20,7 +20,7 @@ class Genesis implements Proxy
 {
     use ProxyTrait;
 
-    const VENEER = 'DecodeLabs\Genesis';
+    const VENEER = 'DecodeLabs\\Genesis';
     const VENEER_TARGET = Inst::class;
 
     public static Inst $instance;
