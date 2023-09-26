@@ -16,7 +16,7 @@ class Environment
     protected string $name = 'default';
 
     /**
-     * @phpstan-var value-of<EnvConfig::RUN_MODES>
+     * @var value-of<EnvConfig::RUN_MODES>
      */
     protected string $mode = 'production';
 
@@ -66,7 +66,7 @@ class Environment
     /**
      * Get run mode
      *
-     * @phpstan-return value-of<EnvConfig::RUN_MODES>
+     * @return value-of<EnvConfig::RUN_MODES>
      */
     public function getMode(): string
     {

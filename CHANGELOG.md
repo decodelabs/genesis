@@ -1,3 +1,5 @@
+* Converted phpstan doc comments to generic
+
 ## v0.7.1 (2022-11-25)
 * Added FileTemplate base
 
