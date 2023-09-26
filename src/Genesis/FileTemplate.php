@@ -16,7 +16,7 @@ use DecodeLabs\Exceptional;
 class FileTemplate
 {
     /**
-     * @phpstan-var array<string, ?string>
+     * @var array<string, ?string>
      */
     protected array $slots = [];
 
