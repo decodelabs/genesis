@@ -1,3 +1,5 @@
+* Updated Terminus dependency
+
 ## v0.7.2 (2023-09-26)
 * Converted phpstan doc comments to generic
 
