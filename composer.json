@@ -2,12 +2,12 @@
     "name": "decodelabs/genesis",
     "description": "Universal bootstrapping framework",
     "type": "library",
-    "keywords": ["bootstrap", "framework", "entry"],
+    "keywords": [ "bootstrap", "framework", "entry" ],
     "license": "MIT",
-    "authors": [{
-        "name": "Tom Wright",
-        "email": "tom@inflatablecookie.com"
-    }],
+    "authors": [ {
+            "name": "Tom Wright",
+            "email": "tom@inflatablecookie.com"
+        } ],
     "require": {
         "php": "^8.0",
 
@@ -17,7 +17,7 @@
         "decodelabs/fluidity": "^0.3.3",
         "decodelabs/glitch-support": "^0.4.1",
         "decodelabs/pandora": "^0.2.3",
-        "decodelabs/terminus": "^0.9.0",
+        "decodelabs/terminus": "^0.9|^0.10",
         "decodelabs/veneer": "^0.10.10"
     },
     "require-dev": {
