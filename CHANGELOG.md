@@ -1,3 +1,4 @@
+## v0.8.0 (2023-10-18)
 * Refactored package file structure
 
 ## v0.7.4 (2023-10-16)
