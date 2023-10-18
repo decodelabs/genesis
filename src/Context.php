@@ -11,9 +11,9 @@ namespace DecodeLabs\Genesis;
 
 use DecodeLabs\Archetype;
 use DecodeLabs\Exceptional;
+use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 use DecodeLabs\Pandora\Container;
-
 use DecodeLabs\Veneer;
 use DecodeLabs\Veneer\LazyLoad;
 use DecodeLabs\Veneer\Plugin;
@@ -143,3 +143,7 @@ class Context
         return $this->startTime;
     }
 }
+
+
+// Register the Veneer facade
+Veneer::register(Context::class, Genesis::class);
