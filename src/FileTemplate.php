@@ -39,8 +39,9 @@ class FileTemplate
      * @param array<string, string> $slots
      * @return $this
      */
-    public function setSlots(array $slots): static
-    {
+    public function setSlots(
+        array $slots
+    ): static {
         foreach ($slots as $name => $slot) {
             $this->setSlot($name, $slot);
         }
@@ -74,8 +75,9 @@ class FileTemplate
     /**
      * Get slot
      */
-    public function getSlot(string $name): ?string
-    {
+    public function getSlot(
+        string $name
+    ): ?string {
         if (array_key_exists($name, $this->slots)) {
             return $this->slots[$name];
         }
@@ -83,8 +85,9 @@ class FileTemplate
         return $this->slots[$name] = $this->generateSlot($name);
     }
 
-    protected function generateSlot(string $name): ?string
-    {
+    protected function generateSlot(
+        string $name
+    ): ?string {
         switch ($name) {
             case 'date':
                 return date('Y-m-d');

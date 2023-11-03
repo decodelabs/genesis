@@ -26,8 +26,9 @@ class Stack implements Loader
         return 0;
     }
 
-    public function registerLoader(Loader $loader): void
-    {
+    public function registerLoader(
+        Loader $loader
+    ): void {
         if (empty($this->loaders)) {
             spl_autoload_register([$this, 'loadClass'], true, true);
         }
@@ -39,8 +40,9 @@ class Stack implements Loader
         });
     }
 
-    public function unregisterLoader(Loader $loader): void
-    {
+    public function unregisterLoader(
+        Loader $loader
+    ): void {
         unset($this->loaders[get_class($loader)]);
 
         if (empty($this->loaders)) {
@@ -51,8 +53,9 @@ class Stack implements Loader
     /**
      * Cycle through loaders until class is found
      */
-    public function loadClass(string $class): void
-    {
+    public function loadClass(
+        string $class
+    ): void {
         foreach ($this->loaders as $loader) {
             $loader->loadClass($class);
 

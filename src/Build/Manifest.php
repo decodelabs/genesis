@@ -39,9 +39,13 @@ interface Manifest
     /**
      * @return Generator<File|Dir, string>
      */
-    public function scanPackage(Package $package): Generator;
+    public function scanPackage(
+        Package $package
+    ): Generator;
 
-    public function writeEntryFile(File $file): void;
+    public function writeEntryFile(
+        File $file
+    ): void;
 
     /**
      * @return Generator<Task>

@@ -19,8 +19,9 @@ class Production implements Config
     protected ?int $umask = null;
     protected ?bool $displayErrors = null;
 
-    public function __construct(?string $name = null)
-    {
+    public function __construct(
+        ?string $name = null
+    ) {
         $this->name = $name;
     }
 
@@ -34,8 +35,9 @@ class Production implements Config
         return static::DEFAULT_NAME;
     }
 
-    public function setUmask(?int $umask): void
-    {
+    public function setUmask(
+        ?int $umask
+    ): void {
         $this->umask = $umask;
     }
 
@@ -49,8 +51,9 @@ class Production implements Config
         return E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED;
     }
 
-    public function setDisplayErrors(?bool $errors): void
-    {
+    public function setDisplayErrors(
+        ?bool $errors
+    ): void {
         $this->displayErrors = $errors;
     }
 
