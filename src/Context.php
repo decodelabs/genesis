@@ -74,9 +74,9 @@ class Context
         string $hubName,
         array $options = []
     ): void {
-        $this->initialize($hubName, $options);
-        $this->execute();
-        $this->shutdown();
+        $kernel = $this->initialize($hubName, $options);
+        $kernel->run();
+        $kernel->shutdown();
     }
 
     /**
@@ -121,7 +121,9 @@ class Context
      */
     public function execute(): void
     {
-        $this->kernel->run();
+        throw Exceptional\Deprecated(
+            'Context::execute() has been deprecated in favour of Context::run()'
+        );
     }
 
 

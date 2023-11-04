@@ -53,11 +53,15 @@ abstract class Bootstrap
 
 
     /**
+     * Default execution method
+     */
+    public function execute(
+        string $vendorPath
+    ): void {
+    }
+
+    /**
      * @return array<string, string>
      */
     abstract public function getRootSearchPaths(): array;
-
-    abstract public function execute(
-        string $vendorPath
-    ): void;
 }
