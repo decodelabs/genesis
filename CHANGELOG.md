@@ -1,3 +1,5 @@
+* Deprecated execute() in favour of run()
+
 ## v0.8.1 (2023-11-04)
 * Return Kernel from initialize()
 
