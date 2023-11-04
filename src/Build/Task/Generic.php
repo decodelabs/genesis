@@ -42,8 +42,9 @@ class Generic implements Task
     /**
      * Run task
      */
-    public function run(Session $session): void
-    {
+    public function run(
+        Session $session
+    ): void {
         $this->callback->__invoke($session);
     }
 }

@@ -14,5 +14,8 @@ use DecodeLabs\Terminus\Session;
 interface Task
 {
     public function getDescription(): string;
-    public function run(Session $session): void;
+
+    public function run(
+        Session $session
+    ): void;
 }

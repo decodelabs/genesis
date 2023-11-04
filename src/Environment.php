@@ -23,8 +23,9 @@ class Environment
     /**
      * Init with config
      */
-    public function __construct(EnvConfig $config)
-    {
+    public function __construct(
+        EnvConfig $config
+    ) {
         // Env name
         $this->name = $config->getEnvironmentName() ?? $this->name;
 

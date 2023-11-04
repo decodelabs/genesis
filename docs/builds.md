@@ -64,7 +64,7 @@ Once the build manifest is in place, you will also need a `Bootstrap` implementa
 
 ```php
 // Directly load the bootstrap without initialising composer
-require_once 'path/to/vendor/decodelabs/genesis/bootstrap.php';
+require_once 'path/to/vendor/decodelabs/genesis/src/Bootstrap.php';
 
 namespace My\App;
 

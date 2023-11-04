@@ -49,7 +49,9 @@ interface Hub extends Cast
     /**
      * Register custom loaders into the stack
      */
-    public function initializeLoaders(StackLoader $loader): void;
+    public function initializeLoaders(
+        StackLoader $loader
+    ): void;
 
     /**
      * Load build info

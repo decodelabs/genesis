@@ -26,8 +26,9 @@ class Handler
     /**
      * Init with manifest
      */
-    public function __construct(Manifest $manifest)
-    {
+    public function __construct(
+        Manifest $manifest
+    ) {
         $this->manifest = $manifest;
         $this->buildId = $manifest->generateBuildId();
         $this->compile = !Genesis::$environment->isDevelopment();
@@ -52,8 +53,9 @@ class Handler
     /**
      * Set compile
      */
-    public function setCompile(bool $compile): void
-    {
+    public function setCompile(
+        bool $compile
+    ): void {
         $this->compile = $compile;
     }
 
@@ -329,8 +331,9 @@ class Handler
      *
      * @param Generator<Task> $tasks
      */
-    protected function runTaskList(Generator $tasks): void
-    {
+    protected function runTaskList(
+        Generator $tasks
+    ): void {
         $session = $this->manifest->getCliSession();
         $session->newLine();
 

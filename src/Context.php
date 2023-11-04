@@ -48,8 +48,9 @@ class Context
     /**
      * Init with optional Container
      */
-    public function __construct(Container $container = null)
-    {
+    public function __construct(
+        Container $container = null
+    ) {
         $this->replaceContainer($container ?? new Container());
         $this->loader = new StackLoader();
     }
@@ -58,8 +59,9 @@ class Context
     /**
      * Replace container for whole application
      */
-    public function replaceContainer(Container $container): void
-    {
+    public function replaceContainer(
+        Container $container
+    ): void {
         $this->container = $container;
         Veneer::setContainer($this->container);
     }
@@ -83,7 +85,7 @@ class Context
     public function initialize(
         string $hubName,
         array $options = []
-    ): void {
+    ): Kernel {
         if (isset($this->startTime)) {
             throw Exceptional::Setup('Context has already been initialized');
         }
@@ -109,6 +111,8 @@ class Context
         // Kernel
         $this->kernel = $this->hub->loadKernel();
         $this->kernel->initialize();
+
+        return $this->kernel;
     }
 
 

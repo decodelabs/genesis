@@ -32,8 +32,9 @@ abstract class Bootstrap
      *
      * @param array<string, string> $paths
      */
-    final public function findRoot(array $paths): string
-    {
+    final public function findRoot(
+        array $paths
+    ): string {
         foreach ($paths as $testFile => $vendorPath) {
             if (file_exists($testFile)) {
                 require_once $testFile;
@@ -56,5 +57,7 @@ abstract class Bootstrap
      */
     abstract public function getRootSearchPaths(): array;
 
-    abstract public function execute(string $vendorPath): void;
+    abstract public function execute(
+        string $vendorPath
+    ): void;
 }

@@ -37,7 +37,9 @@ class Genesis implements Proxy
 
     public static function replaceContainer(ContainerPlugin $container): void {}
     public static function run(string $hubName, array $options = []): void {}
-    public static function initialize(string $hubName, array $options = []): void {}
+    public static function initialize(string $hubName, array $options = []): KernelPlugin {
+        return static::$instance->initialize(...func_get_args());
+    }
     public static function execute(): void {}
     public static function shutdown(): void {}
     public static function getStartTime(): float {
