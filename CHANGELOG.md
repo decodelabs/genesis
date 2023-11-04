@@ -1,3 +1,5 @@
+* Return Kernel from initialize()
+
 ## v0.8.0 (2023-10-18)
 * Refactored package file structure
 

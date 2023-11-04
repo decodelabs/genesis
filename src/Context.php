@@ -85,7 +85,7 @@ class Context
     public function initialize(
         string $hubName,
         array $options = []
-    ): void {
+    ): Kernel {
         if (isset($this->startTime)) {
             throw Exceptional::Setup('Context has already been initialized');
         }
@@ -111,6 +111,8 @@ class Context
         // Kernel
         $this->kernel = $this->hub->loadKernel();
         $this->kernel->initialize();
+
+        return $this->kernel;
     }
 
 
