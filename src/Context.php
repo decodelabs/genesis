@@ -62,6 +62,7 @@ class Context
     public function replaceContainer(
         Container $container
     ): void {
+        $container->bindShared(Context::class, $this);
         $this->container = $container;
         Veneer::setContainer($this->container);
     }
@@ -121,7 +122,7 @@ class Context
      */
     public function execute(): void
     {
-        throw Exceptional\Deprecated(
+        throw Exceptional::Deprecated(
             'Context::execute() has been deprecated in favour of Context::run()'
         );
     }
