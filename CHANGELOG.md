@@ -1,3 +1,5 @@
+* Made PHP8.1 minimum version
+
 ## v0.8.3 (2023-11-07)
 * Bind Context in Container on launch
 
