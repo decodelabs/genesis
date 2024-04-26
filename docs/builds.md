@@ -90,7 +90,7 @@ class Bootstrap extends Base {
     /**
      * Run found build location
      */
-    public function execute(string $vendorPath): void
+    public function execute(string $vendorPath): never
     {
         // Once a vendor folder is found, composer autoloads
         // This method should then consider itself the app's entry point

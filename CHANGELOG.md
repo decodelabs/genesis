@@ -1,3 +1,7 @@
+## v0.8.4 (2024-04-26)
+* Updated Archetype dependency
+* Made PHP8.1 minimum version
+
 ## v0.8.3 (2023-11-07)
 * Bind Context in Container on launch
 
