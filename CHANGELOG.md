@@ -1,3 +1,6 @@
+## v0.8.5 (2024-04-29)
+* Fixed Veneer stubs in gitattributes
+
 ## v0.8.4 (2024-04-26)
 * Updated Archetype dependency
 * Made PHP8.1 minimum version
