@@ -1,3 +1,4 @@
+## v0.9.0 (2024-08-21)
 * Converted RunMode to enum
 * Updated Veneer dependency and Stub
 * Removed unneeded LazyLoad binding attribute
