@@ -10,10 +10,11 @@ declare(strict_types=1);
 namespace DecodeLabs\Genesis\Environment\Config;
 
 use DecodeLabs\Genesis\Environment\Config;
+use DecodeLabs\Genesis\Environment\Mode;
 
 class Production implements Config
 {
-    public const DEFAULT_NAME = 'production';
+    protected const DefaultName = 'production';
 
     protected ?string $name = null;
     protected ?int $umask = null;
@@ -27,12 +28,12 @@ class Production implements Config
 
     public function getEnvironmentName(): ?string
     {
-        return $this->name ?? static::DEFAULT_NAME;
+        return $this->name ?? static::DefaultName;
     }
 
-    public function getMode(): ?string
+    public function getMode(): ?Mode
     {
-        return static::DEFAULT_NAME;
+        return Mode::fromName(static::DefaultName);
     }
 
     public function setUmask(

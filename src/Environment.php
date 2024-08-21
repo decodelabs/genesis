@@ -10,15 +10,12 @@ declare(strict_types=1);
 namespace DecodeLabs\Genesis;
 
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
+use DecodeLabs\Genesis\Environment\Mode;
 
 class Environment
 {
     protected string $name = 'default';
-
-    /**
-     * @var value-of<EnvConfig::RUN_MODES>
-     */
-    protected string $mode = 'production';
+    protected Mode $mode = Mode::Production;
 
     /**
      * Init with config
@@ -66,10 +63,8 @@ class Environment
 
     /**
      * Get run mode
-     *
-     * @return value-of<EnvConfig::RUN_MODES>
      */
-    public function getMode(): string
+    public function getMode(): Mode
     {
         return $this->mode;
     }
@@ -79,7 +74,7 @@ class Environment
      */
     public function isDevelopment(): bool
     {
-        return $this->mode === 'development';
+        return $this->mode === Mode::Development;
     }
 
     /**
@@ -88,8 +83,8 @@ class Environment
     public function isTesting(): bool
     {
         return
-            $this->mode === 'testing' ||
-            $this->mode === 'development';
+            $this->mode === Mode::Testing ||
+            $this->mode === Mode::Development;
     }
 
     /**
@@ -97,6 +92,6 @@ class Environment
      */
     public function isProduction(): bool
     {
-        return $this->mode === 'production';
+        return $this->mode === Mode::Production;
     }
 }
