@@ -17,6 +17,6 @@ class Testing extends Production
 
     public function getErrorReporting(): ?int
     {
-        return E_ALL & ~E_NOTICE & ~E_STRICT;
+        return E_ALL & ~E_NOTICE;
     }
 }

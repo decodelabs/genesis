@@ -49,7 +49,7 @@ class Production implements Config
 
     public function getErrorReporting(): ?int
     {
-        return E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED;
+        return E_ALL & ~E_NOTICE & ~E_DEPRECATED;
     }
 
     public function setDisplayErrors(
