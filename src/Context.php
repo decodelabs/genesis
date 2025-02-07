@@ -48,7 +48,7 @@ class Context
      * Init with optional Container
      */
     public function __construct(
-        Container $container = null
+        ?Container $container = null
     ) {
         $this->replaceContainer($container ?? new Container());
         $this->loader = new StackLoader();

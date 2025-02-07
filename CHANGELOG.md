@@ -1,3 +1,6 @@
+## v0.9.1 (2025-02-07)
+* Fixed implicit nullable arguments
+
 ## v0.9.0 (2024-08-21)
 * Converted RunMode to enum
 * Updated Veneer dependency and Stub
