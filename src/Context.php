@@ -15,7 +15,6 @@ use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 use DecodeLabs\Pandora\Container;
 use DecodeLabs\Veneer;
-use DecodeLabs\Veneer\LazyLoad;
 use DecodeLabs\Veneer\Plugin;
 
 class Context
@@ -27,19 +26,15 @@ class Context
     public StackLoader $loader;
 
     #[Plugin]
-    #[LazyLoad]
     public Hub $hub;
 
     #[Plugin]
-    #[LazyLoad]
     public Build $build;
 
     #[Plugin]
-    #[LazyLoad]
     public Environment $environment;
 
     #[Plugin]
-    #[LazyLoad]
     public Kernel $kernel;
 
     protected float $startTime;
@@ -61,14 +56,14 @@ class Context
     public function replaceContainer(
         Container $container
     ): void {
-        $container->bindShared(Context::class, $this);
         $this->container = $container;
+        $container->bindShared(Context::class, $this);
         Veneer::setContainer($this->container);
     }
 
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string,mixed> $options
      */
     final public function run(
         string $hubName,
@@ -80,14 +75,16 @@ class Context
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string,mixed> $options
      */
     public function initialize(
         string $hubName,
         array $options = []
     ): Kernel {
         if (isset($this->startTime)) {
-            throw Exceptional::Setup('Context has already been initialized');
+            throw Exceptional::Setup(
+                message: 'Context has already been initialized'
+            );
         }
 
         $this->startTime = microtime(true);
@@ -122,7 +119,7 @@ class Context
     public function execute(): void
     {
         throw Exceptional::Deprecated(
-            'Context::execute() has been deprecated in favour of Context::run()'
+            message: 'Context::execute() has been deprecated in favour of Context::run()'
         );
     }
 
@@ -143,7 +140,9 @@ class Context
     public function getStartTime(): float
     {
         if (!isset($this->startTime)) {
-            throw Exceptional::Setup('Genesis has not been run yet');
+            throw Exceptional::Setup(
+                message: 'Genesis has not been run yet'
+            );
         }
 
         return $this->startTime;
@@ -152,4 +151,7 @@ class Context
 
 
 // Register the Veneer facade
-Veneer::register(Context::class, Genesis::class);
+Veneer\Manager::getGlobalManager()->register(
+    Context::class,
+    Genesis::class
+);

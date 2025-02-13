@@ -13,9 +13,9 @@ use DecodeLabs\Atlas\Dir;
 
 class Package
 {
-    public string $name;
-    public Dir $source;
-    public ?string $targetPath;
+    protected(set) string $name;
+    protected(set) Dir $source;
+    protected(set) ?string $targetPath;
 
     /**
      * Init with name and source location
@@ -28,20 +28,5 @@ class Package
         $this->name = $name;
         $this->source = $source;
         $this->targetPath = $targetPath;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getSourceLocation(): Dir
-    {
-        return $this->source;
-    }
-
-    public function getTargetPath(): ?string
-    {
-        return $this->targetPath;
     }
 }

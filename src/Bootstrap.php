@@ -30,7 +30,7 @@ abstract class Bootstrap
     /**
      * Search for vendor root in possible paths
      *
-     * @param array<string, string> $paths
+     * @param array<string,string> $paths
      */
     final public function findRoot(
         array $paths
@@ -61,7 +61,7 @@ abstract class Bootstrap
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string,string>
      */
     abstract public function getRootSearchPaths(): array;
 }

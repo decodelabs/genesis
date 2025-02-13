@@ -19,9 +19,9 @@ use Throwable;
 
 class Handler
 {
-    protected string $buildId;
-    protected bool $compile = true;
-    protected Manifest $manifest;
+    protected(set) string $buildId;
+    public bool $compile = true;
+    protected(set) Manifest $manifest;
 
     /**
      * Init with manifest
@@ -138,9 +138,8 @@ class Handler
 
         if ($destination->exists()) {
             throw Exceptional::Runtime(
-                'Destination build temp dir already exists',
-                null,
-                $destination
+                message: 'Destination build temp dir already exists',
+                data: $destination
             );
         }
 
@@ -152,7 +151,7 @@ class Handler
         // Create build
         foreach ($this->manifest->scanPackages() as $package) {
             $session->newLine();
-            $session->{'.brightMagenta|bold'}($package->getName());
+            $session->{'.brightMagenta|bold'}($package->name);
 
             foreach ($this->manifest->scanPackage($package) as $node => $location) {
                 $session->write(' - ');
@@ -209,7 +208,9 @@ class Handler
         $source = $this->manifest->getBuildTempDir()->getDir($this->buildId);
 
         if (!$source->exists()) {
-            throw Exceptional::Runtime('Build has not been compiled and cannot be activated');
+            throw Exceptional::Runtime(
+                message: 'Build has not been compiled and cannot be activated'
+            );
         }
 
 
@@ -233,7 +234,10 @@ class Handler
         $active1Exists = $runFile1->exists();
         $active2Exists = $runFile2->exists();
 
-        if ($active1Exists && $active2Exists) {
+        if (
+            $active1Exists &&
+            $active2Exists
+        ) {
             $runFile2->renameTo('Run.php.disabled');
             $active2Exists = false;
             clearstatcache(true);
@@ -338,7 +342,7 @@ class Handler
         $session->newLine();
 
         foreach ($tasks as $task) {
-            $session->{'.yellow|italic|dim'}('⇒ ' . $task->getDescription()); // @ignore-non-ascii
+            $session->{'.yellow|italic|dim'}('⇒ ' . $task->description); // @ignore-non-ascii
 
             try {
                 $task->run($session);

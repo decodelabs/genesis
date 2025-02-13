@@ -16,7 +16,7 @@ use DecodeLabs\Exceptional;
 class FileTemplate
 {
     /**
-     * @var array<string, ?string>
+     * @var array<string,?string>
      */
     protected array $slots = [];
 
@@ -28,7 +28,9 @@ class FileTemplate
         $this->templateFile = Atlas::file($templateFile);
 
         if (!$this->templateFile->exists()) {
-            throw Exceptional::Runtime('Template file could not be found');
+            throw Exceptional::Runtime(
+                message: 'Template file could not be found'
+            );
         }
     }
 
@@ -52,7 +54,7 @@ class FileTemplate
     /**
      * Get slots
      *
-     * @return array<string, ?string>
+     * @return array<string,?string>
      */
     public function getSlots(): array
     {
@@ -62,7 +64,7 @@ class FileTemplate
     /**
      * Set slot
      *
-     * @return $this;
+     * @return $this
      */
     public function setSlot(
         string $name,

@@ -13,7 +13,7 @@ use DecodeLabs\Terminus\Session;
 
 interface Task
 {
-    public function getDescription(): string;
+    public string $description { get; }
 
     public function run(
         Session $session

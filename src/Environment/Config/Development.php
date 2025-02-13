@@ -11,12 +11,9 @@ namespace DecodeLabs\Genesis\Environment\Config;
 
 class Development extends Testing
 {
-    public const DefaultName = 'development';
+    protected const DefaultName = 'development';
 
-    protected ?int $umask = 0;
+    public ?int $umask = 0;
 
-    public function getErrorReporting(): ?int
-    {
-        return E_ALL;
-    }
+    public ?int $errorReporting = E_ALL;
 }

@@ -14,11 +14,36 @@ use DecodeLabs\Genesis\Build\Handler;
 
 class Build
 {
-    public ?int $time = null;
-    public bool $compiled = false;
-    public string $path;
+    protected(set) ?int $time = null;
+    protected(set) bool $compiled = false;
+    protected(set) string $path;
 
-    protected int $cacheBuster;
+    protected(set) int $cacheBuster {
+        get {
+            if (!isset($this->cacheBuster)) {
+                $this->cacheBuster = $this->time ?? time();
+            }
+
+            return $this->cacheBuster;
+        }
+    }
+
+    protected(set) Handler $handler {
+        get {
+            if(!isset($this->handler)) {
+                if (null === ($manifest = $this->context->hub->getBuildManifest())) {
+                    throw Exceptional::Setup(
+                        message: 'Hub does not provide a build manifest'
+                    );
+                }
+
+                $this->handler = new Handler($manifest);
+            }
+
+            return $this->handler;
+        }
+    }
+
     protected Context $context;
 
     /**
@@ -36,14 +61,6 @@ class Build
     }
 
     /**
-     * Get build time
-     */
-    public function getTime(): ?int
-    {
-        return $this->time;
-    }
-
-    /**
      * Should cache bust
      */
     public function shouldCacheBust(): bool
@@ -51,61 +68,5 @@ class Build
         return
             $this->compiled ||
             $this->context->environment->isDevelopment();
-    }
-
-    /**
-     * Get cache buster
-     */
-    public function getCacheBuster(): int
-    {
-        if (!isset($this->cacheBuster)) {
-            $this->cacheBuster = $this->time ?? time();
-        }
-
-        return $this->cacheBuster;
-    }
-
-    /**
-     * Get path
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-
-    /**
-     * Is compiled
-     */
-    public function isCompiled(): bool
-    {
-        return $this->compiled;
-    }
-
-    /**
-     * Is running from source
-     */
-    public function isSource(): bool
-    {
-        return !$this->compiled;
-    }
-
-
-    /**
-     * Get Handler
-     */
-    public function getHandler(): Handler
-    {
-        static $handler;
-
-        if (!isset($handler)) {
-            if (null === ($manifest = $this->context->hub->getBuildManifest())) {
-                throw Exceptional::Setup('Hub does not provide a build manifest');
-            }
-
-            $handler = new Handler($manifest);
-        }
-
-        return $handler;
     }
 }
