@@ -1,3 +1,4 @@
+## v0.10.0 (2025-02-13)
 * Replaced accessors with properties
 * Upgraded PHPStan to v2
 * Tidied boolean logic
