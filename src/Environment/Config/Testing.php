@@ -11,12 +11,8 @@ namespace DecodeLabs\Genesis\Environment\Config;
 
 class Testing extends Production
 {
-    public const DefaultName = 'testing';
+    protected const DefaultName = 'testing';
 
-    protected ?bool $displayErrors = true;
-
-    public function getErrorReporting(): ?int
-    {
-        return E_ALL & ~E_NOTICE;
-    }
+    public ?bool $displayErrors = true;
+    public ?int $errorReporting = E_ALL & ~E_NOTICE;
 }

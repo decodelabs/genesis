@@ -16,9 +16,18 @@ class Production implements Config
 {
     protected const DefaultName = 'production';
 
-    protected ?string $name = null;
-    protected ?int $umask = null;
-    protected ?bool $displayErrors = null;
+    protected(set) ?string $name {
+        get => $this->name ?? $this->getDefaultName();
+    }
+
+    public Mode $mode {
+        get => Mode::fromName($this->getDefaultName());
+    }
+
+    public ?int $umask = null;
+    public ?bool $displayErrors = null;
+    protected(set) ?int $errorReporting = E_ALL & ~E_NOTICE & ~E_DEPRECATED;
+    protected(set) ?string $defaultTimezone = 'UTC';
 
     public function __construct(
         ?string $name = null
@@ -26,45 +35,9 @@ class Production implements Config
         $this->name = $name;
     }
 
-    public function getEnvironmentName(): ?string
-    {
-        return $this->name ?? static::DefaultName;
-    }
-
-    public function getMode(): ?Mode
-    {
-        return Mode::fromName(static::DefaultName);
-    }
-
-    public function setUmask(
-        ?int $umask
-    ): void {
-        $this->umask = $umask;
-    }
-
-    public function getUmask(): ?int
-    {
-        return $this->umask;
-    }
-
-    public function getErrorReporting(): ?int
-    {
-        return E_ALL & ~E_NOTICE & ~E_DEPRECATED;
-    }
-
-    public function setDisplayErrors(
-        ?bool $errors
-    ): void {
-        $this->displayErrors = $errors;
-    }
-
-    public function getDisplayErrors(): ?bool
-    {
-        return $this->displayErrors;
-    }
-
-    public function getDefaultTimezone(): ?string
-    {
-        return 'UTC';
+    protected function getDefaultName(): string {
+        /** @var string $output */
+        $output = static::DefaultName;
+        return $output;
     }
 }

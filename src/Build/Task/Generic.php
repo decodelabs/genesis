@@ -15,7 +15,7 @@ use DecodeLabs\Terminus\Session;
 
 class Generic implements Task
 {
-    protected string $description;
+    protected(set) string $description;
     protected Closure $callback;
 
     /**
@@ -29,14 +29,6 @@ class Generic implements Task
     ) {
         $this->description = $description;
         $this->callback = Closure::fromCallable($callback);
-    }
-
-    /**
-     * Get description
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
     }
 
     /**

@@ -11,12 +11,10 @@ namespace DecodeLabs\Genesis\Environment;
 
 interface Config
 {
-    public function getEnvironmentName(): ?string;
-    public function getMode(): ?Mode;
-
-    public function getUmask(): ?int;
-    public function getErrorReporting(): ?int;
-    public function getDisplayErrors(): ?bool;
-
-    public function getDefaultTimezone(): ?string;
+    public ?string $name { get; }
+    public ?Mode $mode { get; }
+    public ?bool $displayErrors { get; set; }
+    public ?int $errorReporting { get; }
+    public ?int $umask { get; set; }
+    public ?string $defaultTimezone { get; }
 }

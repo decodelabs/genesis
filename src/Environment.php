@@ -14,8 +14,8 @@ use DecodeLabs\Genesis\Environment\Mode;
 
 class Environment
 {
-    protected string $name = 'default';
-    protected Mode $mode = Mode::Production;
+    protected(set) string $name = 'default';
+    protected(set) Mode $mode = Mode::Production;
 
     /**
      * Init with config
@@ -24,28 +24,28 @@ class Environment
         EnvConfig $config
     ) {
         // Env name
-        $this->name = $config->getEnvironmentName() ?? $this->name;
+        $this->name = $config->name ?? $this->name;
 
         // Run mode
-        $this->mode = $config->getMode() ?? $this->mode;
+        $this->mode = $config->mode ?? $this->mode;
 
         // Umask
-        if (null !== ($umask = $config->getUmask())) {
+        if (null !== ($umask = $config->umask)) {
             umask($umask);
         }
 
         // Error reporting
-        if (null !== ($errorReporting = $config->getErrorReporting())) {
+        if (null !== ($errorReporting = $config->errorReporting)) {
             error_reporting($errorReporting);
         }
 
         // Display errors
-        if (null !== ($displayErrors = $config->getDisplayErrors())) {
+        if (null !== ($displayErrors = $config->displayErrors)) {
             ini_set('display_errors', (string)$displayErrors);
         }
 
         // Timezone
-        date_default_timezone_set($config->getDefaultTimezone() ?? 'UTC');
+        date_default_timezone_set($config->defaultTimezone ?? 'UTC');
 
         // MB encoding
         if (function_exists('mb_internal_encoding')) {
@@ -53,21 +53,6 @@ class Environment
         }
     }
 
-    /**
-     * Get environment name
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get run mode
-     */
-    public function getMode(): Mode
-    {
-        return $this->mode;
-    }
 
     /**
      * Is running in development mode

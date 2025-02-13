@@ -20,29 +20,27 @@ class Genesis implements Proxy
 {
     use ProxyTrait;
 
-    const Veneer = 'DecodeLabs\\Genesis';
-    const VeneerTarget = Inst::class;
+    public const Veneer = 'DecodeLabs\\Genesis';
+    public const VeneerTarget = Inst::class;
 
-    public static Inst $instance;
+    protected static Inst $_veneerInstance;
     public static ContainerPlugin $container;
     public static LoaderPlugin $loader;
     /** @var HubPlugin|PluginWrapper<HubPlugin> $hub */
     public static HubPlugin|PluginWrapper $hub;
-    /** @var BuildPlugin|PluginWrapper<BuildPlugin> $build */
-    public static BuildPlugin|PluginWrapper $build;
-    /** @var EnvironmentPlugin|PluginWrapper<EnvironmentPlugin> $environment */
-    public static EnvironmentPlugin|PluginWrapper $environment;
+    public static BuildPlugin $build;
+    public static EnvironmentPlugin $environment;
     /** @var KernelPlugin|PluginWrapper<KernelPlugin> $kernel */
     public static KernelPlugin|PluginWrapper $kernel;
 
     public static function replaceContainer(ContainerPlugin $container): void {}
     public static function run(string $hubName, array $options = []): void {}
     public static function initialize(string $hubName, array $options = []): KernelPlugin {
-        return static::$instance->initialize(...func_get_args());
+        return static::$_veneerInstance->initialize(...func_get_args());
     }
     public static function execute(): void {}
     public static function shutdown(): void {}
     public static function getStartTime(): float {
-        return static::$instance->getStartTime();
+        return static::$_veneerInstance->getStartTime();
     }
 };

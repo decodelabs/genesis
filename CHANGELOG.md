@@ -1,4 +1,9 @@
+* Replaced accessors with properties
+* Upgraded PHPStan to v2
+* Tidied boolean logic
+* Fixed Exceptional syntax
 * Added PHP8.4 to CI workflow
+* Made PHP8.4 minimum version
 
 ## v0.9.2 (2025-02-07)
 * Removed ref to E_STRICT
