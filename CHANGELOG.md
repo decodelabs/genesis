@@ -1,3 +1,7 @@
+## v0.11.0 (2025-02-20)
+* Replaced remaining accessors with property hooks
+* Upgraded Coercion dependency
+
 ## v0.10.0 (2025-02-13)
 * Replaced accessors with properties
 * Upgraded PHPStan to v2

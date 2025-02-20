@@ -11,9 +11,9 @@ namespace DecodeLabs\Genesis;
 
 interface Kernel
 {
-    public function initialize(): void;
-    public function getMode(): string;
+    public string $mode { get; }
 
+    public function initialize(): void;
     public function run(): void;
     public function shutdown(): void;
 }
