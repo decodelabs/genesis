@@ -16,6 +16,12 @@ use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 
 interface Hub extends Cast
 {
+    public string $applicationName { get; }
+    public string $applicationPath { get; }
+    public string $localDataPath { get; }
+    public string $sharedDataPath { get; }
+    public ?BuildManifest $buildManifest { get; }
+
     /**
      * Init with options
      *
@@ -25,26 +31,6 @@ interface Hub extends Cast
         Context $context,
         array $options
     );
-
-    /**
-     * Get application path
-     */
-    public function getApplicationPath(): string;
-
-    /**
-     * Get local data path
-     */
-    public function getLocalDataPath(): string;
-
-    /**
-     * Get shared data path
-     */
-    public function getSharedDataPath(): string;
-
-    /**
-     * Get application name
-     */
-    public function getApplicationName(): string;
 
     /**
      * Register custom loaders into the stack
@@ -72,9 +58,4 @@ interface Hub extends Cast
      * Load kernel to handle running the app
      */
     public function loadKernel(): Kernel;
-
-    /**
-     * Get build manifest
-     */
-    public function getBuildManifest(): ?BuildManifest;
 }

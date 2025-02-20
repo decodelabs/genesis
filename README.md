@@ -47,16 +47,17 @@ use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 
 interface Hub
 {
-    public function getApplicationPath(): string;
-    public function getLocalDataPath(): string;
-    public function getSharedDataPath(): string;
-    public function getApplicationName(): string;
+    public string $applicationName { get; }
+    public string $applicationPath { get; }
+    public string $localDataPath { get; }
+    public string $sharedDataPath { get; }
+    public ?BuildManifest $buildManifest { get; }
+
     public function initializeLoaders(StackLoader $loader): void;
     public function loadBuild(): Build;
     public function loadEnvironmentConfig(): EnvConfig;
     public function initializePlatform(): void;
     public function loadKernel(): Kernel;
-    public function getBuildManifest(): ?BuildManifest;
 }
 ```
 
@@ -75,9 +76,9 @@ The Kernel is the executor of your app - the Hub sets it up and then the Kernel 
 ```php
 interface Kernel
 {
-    public function initialize(): void;
-    public function getMode(): string;
+    public string $mode { get; }
 
+    public function initialize(): void;
     public function run(): void;
     public function shutdown(): void;
 }
@@ -86,7 +87,7 @@ interface Kernel
 Like the Hub, the Kernel can be accessed like so:
 
 ```php
-$runMode = Genesis::$kernel->getMode();
+$runMode = Genesis::$kernel->mode;
 ```
 
 

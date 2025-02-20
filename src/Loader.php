@@ -11,7 +11,7 @@ namespace DecodeLabs\Genesis;
 
 interface Loader
 {
-    public function getPriority(): int;
+    public int $priority { get; }
 
     public function loadClass(
         string $class

@@ -13,18 +13,14 @@ use DecodeLabs\Genesis\Loader;
 
 class Stack implements Loader
 {
+    public int $priority {
+        get => 0;
+    }
+
     /**
      * @var array<string, Loader>
      */
     protected array $loaders = [];
-
-    /**
-     * Top priority
-     */
-    public function getPriority(): int
-    {
-        return 0;
-    }
 
     public function registerLoader(
         Loader $loader
@@ -36,7 +32,7 @@ class Stack implements Loader
         $this->loaders[get_class($loader)] = $loader;
 
         uasort($this->loaders, function (Loader $a, Loader $b) {
-            return $a->getPriority() <=> $b->getPriority();
+            return $a->priority <=> $b->priority;
         });
     }
 

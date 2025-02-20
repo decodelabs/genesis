@@ -31,7 +31,7 @@ class Build
     protected(set) Handler $handler {
         get {
             if(!isset($this->handler)) {
-                if (null === ($manifest = $this->context->hub->getBuildManifest())) {
+                if (null === ($manifest = $this->context->hub->buildManifest)) {
                     throw Exceptional::Setup(
                         message: 'Hub does not provide a build manifest'
                     );

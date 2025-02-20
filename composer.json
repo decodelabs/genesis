@@ -11,15 +11,15 @@
     "require": {
         "php": "^8.4",
 
-        "decodelabs/archetype": "^0.3",
-        "decodelabs/atlas": "^0.12",
+        "decodelabs/archetype": "^0.3.8",
+        "decodelabs/atlas": "^0.12.3",
         "decodelabs/enumerable": "^0.2",
-        "decodelabs/exceptional": "^0.5",
-        "decodelabs/fluidity": "^0.3.3",
-        "decodelabs/glitch-support": "^0.5",
+        "decodelabs/exceptional": "^0.5.2",
+        "decodelabs/fluidity": "^0.3.6",
+        "decodelabs/glitch-support": "^0.5.1",
         "decodelabs/pandora": "^0.3",
         "decodelabs/terminus": "^0.11",
-        "decodelabs/veneer": "^0.12.1"
+        "decodelabs/veneer": "^0.12.2"
     },
     "require-dev": {
         "decodelabs/phpstan-decodelabs": "^0.7"
@@ -39,7 +39,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "0.10.x-dev"
+            "dev-develop": "0.11.x-dev"
         }
     },
     "config": {
