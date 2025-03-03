@@ -12,6 +12,7 @@ namespace DecodeLabs\Genesis;
 use DecodeLabs\Archetype;
 use DecodeLabs\Exceptional;
 use DecodeLabs\Genesis;
+use DecodeLabs\Genesis\Environment\Config\Development as DevelopmentConfig;
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 use DecodeLabs\Pandora\Container;
 use DecodeLabs\Veneer;
@@ -47,6 +48,10 @@ class Context
     ) {
         $this->replaceContainer($container ?? new Container());
         $this->loader = new StackLoader();
+
+        $this->environment = new Environment(
+            new DevelopmentConfig()
+        );
     }
 
 
