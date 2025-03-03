@@ -1,3 +1,6 @@
+## v0.11.1 (2025-03-03)
+* Initiate with development EnvironmentConfig
+
 ## v0.11.0 (2025-02-20)
 * Replaced remaining accessors with property hooks
 * Upgraded Coercion dependency
