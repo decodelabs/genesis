@@ -36,13 +36,11 @@ abstract class Bootstrap
         array $paths
     ): string {
         foreach ($paths as $testFile => $vendorPath) {
-            if (file_exists($testFile)) {
+            if (
+                file_exists($testFile) &&
+                file_exists($vendorPath . '/autoload.php')
+            ) {
                 require_once $testFile;
-
-                if (!file_exists($vendorPath . '/autoload.php')) {
-                    throw new Exception('No autoload.php found under ' . $vendorPath);
-                }
-
                 require_once $vendorPath . '/autoload.php';
                 return $vendorPath;
             }

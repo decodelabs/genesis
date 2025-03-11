@@ -1,3 +1,6 @@
+## v0.11.2 (2025-03-11)
+* Simplified vendor path logic in Bootstrap
+
 ## v0.11.1 (2025-03-03)
 * Initiate with development EnvironmentConfig
 
