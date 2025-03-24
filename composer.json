@@ -8,6 +8,8 @@
             "name": "Tom Wright",
             "email": "tom@inflatablecookie.com"
         } ],
+    "repositories": {
+    },
     "require": {
         "php": "^8.4",
 
