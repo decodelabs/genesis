@@ -43,4 +43,12 @@ class Genesis implements Proxy
     public static function getStartTime(): float {
         return static::$_veneerInstance->getStartTime();
     }
+    public static function aliasPath(string $alias, string $path): void {}
+    public static function resolvePath(string $path): string {
+        return static::$_veneerInstance->resolvePath(...func_get_args());
+    }
+    public static function getPathAliases(): array {
+        return static::$_veneerInstance->getPathAliases();
+    }
+    public static function removePathAlias(string $alias): void {}
 };

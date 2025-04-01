@@ -38,6 +38,11 @@ class Context
     #[Plugin]
     public Kernel $kernel;
 
+    /**
+     * @var array<string,string>
+     */
+    protected array $pathAliases = [];
+
     protected float $startTime;
 
     /**
@@ -151,6 +156,65 @@ class Context
         }
 
         return $this->startTime;
+    }
+
+
+    /**
+     * Register a path alias
+     */
+    public function aliasPath(
+        string $alias,
+        string $path
+    ): void {
+        $alias = rtrim($alias, '/').'/';
+        $path = rtrim($path, '/').'/';
+        $this->pathAliases[$alias] = $path;
+    }
+
+    /**
+     * Resolve a path alias
+     */
+    public function resolvePath(
+        string $path
+    ): string {
+        if (isset($this->pathAliases[$path])) {
+            return $this->pathAliases[$path];
+        }
+
+        if(
+            !str_ends_with($path, '/') &&
+            isset($this->pathAliases[$path.'/'])
+        ) {
+            return $this->pathAliases[$path.'/'];
+        }
+
+        foreach ($this->pathAliases as $alias => $target) {
+            if (str_starts_with($path, $alias)) {
+                return $target . substr($path, strlen($alias));
+            }
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get path aliases
+     *
+     * @return array<string,string>
+     */
+    public function getPathAliases(): array
+    {
+        return $this->pathAliases;
+    }
+
+    /**
+     * Remove path alias
+     */
+    public function removePathAlias(
+        string $alias
+    ): void {
+        $alias = rtrim($alias, '/').'/';
+        unset($this->pathAliases[$alias]);
     }
 }
 
