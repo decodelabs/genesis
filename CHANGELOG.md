@@ -1,3 +1,6 @@
+## v0.11.3 (2025-04-01)
+* Added path alias system
+
 ## v0.11.2 (2025-03-11)
 * Simplified vendor path logic in Bootstrap
 
