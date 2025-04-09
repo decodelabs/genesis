@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis\Environment;
 
+use DecodeLabs\Monarch\EnvironmentMode as Mode;
+
 interface Config
 {
     public ?string $name { get; }
