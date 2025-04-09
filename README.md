@@ -47,7 +47,6 @@ use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 
 interface Hub
 {
-    public string $applicationName { get; }
     public ?BuildManifest $buildManifest { get; }
 
     public function initializeLoaders(StackLoader $loader): void;
@@ -62,7 +61,7 @@ The hub provides access to all of the critical information and structures needed
 Once instantiated, the hub can be accessed via the Genesis Veneer frontage:
 
 ```php
-$appPath = Genesis::$hub->getApplicationPath();
+$buildManifest = Genesis::$hub->buildManifest;
 ```
 
 
@@ -97,15 +96,15 @@ if(Genesis::$environment->isDevelopment()) {
     // Do fun dev stuff
 }
 
-$envName = Genesis::$environment->getName();
-$rootPath = Genesis::$build->getPath();
+$envName = Genesis::$environment->name;
+$rootPath = Genesis::$build->path;
 
 if(Genesis::$build->isCompiled()) {
     // We've compiled a build
 }
 
 // Get time of build to use in URLs as a cache buster
-$cacheBuster = Genesis::$build->getCacheBuster();
+$cacheBuster = Genesis::$build->cacheBuster;
 ```
 
 

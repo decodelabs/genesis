@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace DecodeLabs\Genesis\Environment\Config;
 
 use DecodeLabs\Genesis\Environment\Config;
-use DecodeLabs\Genesis\Environment\Mode;
+use DecodeLabs\Monarch\EnvironmentMode as Mode;
 
 class Production implements Config
 {

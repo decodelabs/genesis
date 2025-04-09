@@ -90,6 +90,7 @@ class Context
 
         // Init environment
         $this->environment = new Environment($this->hub->loadEnvironmentConfig());
+        Monarch::setEnvironmentMode($this->environment->mode);
 
         // Platform
         $this->hub->initializePlatform();

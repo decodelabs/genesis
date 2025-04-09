@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace DecodeLabs\Genesis;
 
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
-use DecodeLabs\Genesis\Environment\Mode;
+use DecodeLabs\Monarch\EnvironmentMode as Mode;
 
 class Environment
 {
