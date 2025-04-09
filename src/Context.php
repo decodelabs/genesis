@@ -14,6 +14,7 @@ use DecodeLabs\Exceptional;
 use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Environment\Config\Development as DevelopmentConfig;
 use DecodeLabs\Genesis\Loader\Stack as StackLoader;
+use DecodeLabs\Monarch;
 use DecodeLabs\Pandora\Container;
 use DecodeLabs\Veneer;
 use DecodeLabs\Veneer\Plugin;
@@ -21,7 +22,7 @@ use DecodeLabs\Veneer\Plugin;
 class Context
 {
     #[Plugin]
-    public Container $container;
+    public Bootstrap $bootstrap;
 
     #[Plugin]
     public StackLoader $loader;
@@ -38,20 +39,17 @@ class Context
     #[Plugin]
     public Kernel $kernel;
 
-    /**
-     * @var array<string,string>
-     */
-    protected array $pathAliases = [];
-
     protected float $startTime;
 
     /**
      * Init with optional Container
      */
-    public function __construct(
-        ?Container $container = null
-    ) {
-        $this->replaceContainer($container ?? new Container());
+    public function __construct() {
+        // Get a Pandora container in ASAP if available
+        if(class_exists(Container::class)) {
+            Monarch::replaceContainer(new Container());
+        }
+
         $this->loader = new StackLoader();
 
         $this->environment = new Environment(
@@ -61,35 +59,10 @@ class Context
 
 
     /**
-     * Replace container for whole application
+     * Bootstrap application
      */
-    public function replaceContainer(
-        Container $container
-    ): void {
-        $this->container = $container;
-        $container->bindShared(Context::class, $this);
-        Veneer::setContainer($this->container);
-    }
-
-
-    /**
-     * @param array<string,mixed> $options
-     */
-    final public function run(
-        string $hubName,
-        array $options = []
-    ): void {
-        $kernel = $this->initialize($hubName, $options);
-        $kernel->run();
-        $kernel->shutdown();
-    }
-
-    /**
-     * @param array<string,mixed> $options
-     */
-    public function initialize(
-        string $hubName,
-        array $options = []
+    public function bootstrap(
+        Bootstrap $bootstrap
     ): Kernel {
         if (isset($this->startTime)) {
             throw Exceptional::Setup(
@@ -97,14 +70,20 @@ class Context
             );
         }
 
+        // Start time
         $this->startTime = microtime(true);
 
+        // Bootstrap
+        $this->bootstrap = $bootstrap;
+        Monarch::$paths->root = Genesis::$bootstrap->rootPath;
+
         // Load hub
-        $class = Archetype::resolve(Hub::class, $hubName);
-        $this->hub = new $class($this, $options);
+        $class = Archetype::resolve(Hub::class, $bootstrap->hubClass);
+        $this->hub = new $class($this, $bootstrap);
 
         // Build info
         $this->build = $this->hub->loadBuild();
+        Monarch::$paths->run = $this->build->path;
 
         // Loaders
         $this->hub->initializeLoaders($this->loader);
@@ -122,26 +101,16 @@ class Context
         return $this->kernel;
     }
 
-
     /**
-     * Execute application
+     * Bootstrap application
      */
-    public function execute(): void
-    {
-        throw Exceptional::Deprecated(
-            message: 'Context::execute() has been deprecated in favour of Context::run()'
-        );
+    public function bootstrapAndRun(
+        Bootstrap $bootstrap
+    ): void {
+        $kernel = $this->bootstrap($bootstrap);
+        $kernel->run();
+        $kernel->shutdown();
     }
-
-
-    /**
-     * Shutdown system
-     */
-    public function shutdown(): void
-    {
-        $this->kernel->shutdown();
-    }
-
 
 
     /**
@@ -156,65 +125,6 @@ class Context
         }
 
         return $this->startTime;
-    }
-
-
-    /**
-     * Register a path alias
-     */
-    public function aliasPath(
-        string $alias,
-        string $path
-    ): void {
-        $alias = rtrim($alias, '/').'/';
-        $path = rtrim($path, '/').'/';
-        $this->pathAliases[$alias] = $path;
-    }
-
-    /**
-     * Resolve a path alias
-     */
-    public function resolvePath(
-        string $path
-    ): string {
-        if (isset($this->pathAliases[$path])) {
-            return $this->pathAliases[$path];
-        }
-
-        if(
-            !str_ends_with($path, '/') &&
-            isset($this->pathAliases[$path.'/'])
-        ) {
-            return $this->pathAliases[$path.'/'];
-        }
-
-        foreach ($this->pathAliases as $alias => $target) {
-            if (str_starts_with($path, $alias)) {
-                return $target . substr($path, strlen($alias));
-            }
-        }
-
-        return $path;
-    }
-
-    /**
-     * Get path aliases
-     *
-     * @return array<string,string>
-     */
-    public function getPathAliases(): array
-    {
-        return $this->pathAliases;
-    }
-
-    /**
-     * Remove path alias
-     */
-    public function removePathAlias(
-        string $alias
-    ): void {
-        $alias = rtrim($alias, '/').'/';
-        unset($this->pathAliases[$alias]);
     }
 }
 

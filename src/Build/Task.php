@@ -13,6 +13,7 @@ use DecodeLabs\Terminus\Session;
 
 interface Task
 {
+    public int $priority { get; }
     public string $description { get; }
 
     public function run(

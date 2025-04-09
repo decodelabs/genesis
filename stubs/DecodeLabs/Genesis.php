@@ -8,7 +8,7 @@ namespace DecodeLabs;
 use DecodeLabs\Veneer\Proxy as Proxy;
 use DecodeLabs\Veneer\ProxyTrait as ProxyTrait;
 use DecodeLabs\Genesis\Context as Inst;
-use DecodeLabs\Pandora\Container as ContainerPlugin;
+use DecodeLabs\Genesis\Bootstrap as BootstrapPlugin;
 use DecodeLabs\Genesis\Loader\Stack as LoaderPlugin;
 use DecodeLabs\Genesis\Hub as HubPlugin;
 use DecodeLabs\Genesis\Build as BuildPlugin;
@@ -24,7 +24,8 @@ class Genesis implements Proxy
     public const VeneerTarget = Inst::class;
 
     protected static Inst $_veneerInstance;
-    public static ContainerPlugin $container;
+    /** @var BootstrapPlugin|PluginWrapper<BootstrapPlugin> $bootstrap */
+    public static BootstrapPlugin|PluginWrapper $bootstrap;
     public static LoaderPlugin $loader;
     /** @var HubPlugin|PluginWrapper<HubPlugin> $hub */
     public static HubPlugin|PluginWrapper $hub;
@@ -33,22 +34,11 @@ class Genesis implements Proxy
     /** @var KernelPlugin|PluginWrapper<KernelPlugin> $kernel */
     public static KernelPlugin|PluginWrapper $kernel;
 
-    public static function replaceContainer(ContainerPlugin $container): void {}
-    public static function run(string $hubName, array $options = []): void {}
-    public static function initialize(string $hubName, array $options = []): KernelPlugin {
-        return static::$_veneerInstance->initialize(...func_get_args());
+    public static function bootstrap(BootstrapPlugin $bootstrap): KernelPlugin {
+        return static::$_veneerInstance->bootstrap(...func_get_args());
     }
-    public static function execute(): void {}
-    public static function shutdown(): void {}
+    public static function bootstrapAndRun(BootstrapPlugin $bootstrap): void {}
     public static function getStartTime(): float {
         return static::$_veneerInstance->getStartTime();
     }
-    public static function aliasPath(string $alias, string $path): void {}
-    public static function resolvePath(string $path): string {
-        return static::$_veneerInstance->resolvePath(...func_get_args());
-    }
-    public static function getPathAliases(): array {
-        return static::$_veneerInstance->getPathAliases();
-    }
-    public static function removePathAlias(string $alias): void {}
 };

@@ -15,6 +15,7 @@ use DecodeLabs\Terminus\Session;
 
 class Generic implements Task
 {
+    public int $priority;
     protected(set) string $description;
     protected Closure $callback;
 
@@ -25,10 +26,12 @@ class Generic implements Task
      */
     public function __construct(
         string $description,
-        callable $callback
+        callable $callback,
+        int $priority = 0
     ) {
         $this->description = $description;
         $this->callback = Closure::fromCallable($callback);
+        $this->priority = $priority;
     }
 
     /**
