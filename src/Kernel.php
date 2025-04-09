@@ -15,5 +15,5 @@ interface Kernel
 
     public function initialize(): void;
     public function run(): void;
-    public function shutdown(): void;
+    public function shutdown(): never;
 }

@@ -18,13 +18,8 @@ interface Manifest
 {
     public function getCliSession(): Session;
     public function generateBuildId(): string;
-
     public function getBuildTempDir(): Dir;
 
-    public function getRunDir(): Dir;
-    public function getRunName1(): string;
-    public function getRunName2(): string;
-    public function getEntryFileName(): string;
 
     /**
      * @return Generator<Task>
@@ -56,63 +51,6 @@ interface Manifest
 ```
 
 Your implementation of this interface is responsible for defining the location of builds, the names of build folders and run-files, loading tasks to be executed in the build process, and providing the list of files and folders to be included in the build.
-
-
-## Bootstrap
-
-Once the build manifest is in place, you will also need a `Bootstrap` implementation to take care of finding the correct run folder.
-
-```php
-// Directly load the bootstrap without initialising composer
-require_once 'path/to/vendor/decodelabs/genesis/src/Bootstrap.php';
-
-namespace My\App;
-
-use My\App\Hub;
-use DecodeLabs\Genesis;
-use DecodeLabs\Genesis\Bootstrap as Base;
-
-class Bootstrap extends Base {
-
-    /**
-     * Get list of possible build locations
-     */
-    public function getRootSearchPaths(): array
-    {
-        // Return a list of files to search for mapped to the location of the vendor folder
-        return [
-            'path/to/run-folder/active1/run.php' => 'path/to/run-folder/active1/vendor',
-            'path/to/run-folder/active2/run.php' => 'path/to/run-folder/active2/vendor',
-            __FILE__ => 'path/to/app-source/vendor'
-        ];
-    }
-
-    /**
-     * Run found build location
-     */
-    public function execute(string $vendorPath): never
-    {
-        // Once a vendor folder is found, composer autoloads
-        // This method should then consider itself the app's entry point
-        Genesis::run(Hub::class, [
-            'vendorPath' => $vendorPath
-        ]);
-        exit;
-    }
-}
-```
-
-Then instead of calling `run` in your entry, you load the Bootstrap from source:
-
-```php
-// Load your bootstrap class
-require_once 'path/to/my/classes/Bootstrap.php';
-
-// Search through root paths and execute
-(new My\App\Bootstrap()->run());
-```
-
-This way, your entry defers any work to the Bootstrap class - your Bootstrap being the only thing that needs to load before composer, and won't need to change between application deployments.
 
 
 ## Build tasks

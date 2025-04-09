@@ -18,13 +18,7 @@ interface Manifest
 {
     public function getCliSession(): Session;
     public function generateBuildId(): string;
-
     public function getBuildTempDir(): Dir;
-
-    public function getRunDir(): Dir;
-    public function getRunName1(): string;
-    public function getRunName2(): string;
-    public function getEntryFileName(): string;
 
     /**
      * @return Generator<Task>
@@ -37,14 +31,15 @@ interface Manifest
     public function scanPackages(): Generator;
 
     /**
-     * @return Generator<File|Dir, string>
+     * @return Generator<File|Dir,string>
      */
     public function scanPackage(
         Package $package
     ): Generator;
 
     public function writeEntryFile(
-        File $file
+        File $file,
+        string $buildId
     ): void;
 
     /**

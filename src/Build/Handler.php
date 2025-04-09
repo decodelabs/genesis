@@ -9,11 +9,15 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis\Build;
 
+use DecodeLabs\Archetype;
+use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\Dir;
 use DecodeLabs\Atlas\File;
 use DecodeLabs\Exceptional;
 use DecodeLabs\Genesis;
+use DecodeLabs\Genesis\Bootstrap\Buildable;
 use DecodeLabs\Glitch\Proxy as Glitch;
+use DecodeLabs\Monarch;
 use Generator;
 use Throwable;
 
@@ -31,7 +35,7 @@ class Handler
     ) {
         $this->manifest = $manifest;
         $this->buildId = $manifest->generateBuildId();
-        $this->compile = !Genesis::$environment->isDevelopment();
+        $this->compile = Genesis::$bootstrap instanceof Buildable;
     }
 
     /**
@@ -128,6 +132,8 @@ class Handler
      */
     public function compile(): Dir
     {
+        $bootstrap = $this->getBuildableBootstrap();
+
         $session = $this->manifest->getCliSession();
         $session->newLine();
         $session->{'.yellow|italic|dim'}('⇒ Packaging files'); // @ignore-non-ascii
@@ -149,41 +155,64 @@ class Handler
 
 
         // Create build
+        $merger = function(
+            File|Dir $node,
+            string $location
+        ) use ($session, $destination, $destinationPath) {
+            $session->write(' - ');
+            $session->{'cyan'}(Glitch::normalizePath((string)$node));
+
+            if (!$node->exists()) {
+                $session->{'.brightRed'}(' skipped');
+                return;
+            }
+
+            $session->{'.white'}(' ' . $location);
+
+            $location = ltrim($location, '/');
+
+            if ($node instanceof Dir) {
+                $node->mergeInto($destinationPath . '/' . $location);
+            } else {
+                $node->copy($destination . '/' . $location);
+            }
+        };
+
+
+        // Provider files
+        $rootDir = Atlas::dir(Monarch::$paths->root);
+
+        foreach($this->scanProviders() as $provider) {
+            $session->newLine();
+            $session->{'.brightMagenta|bold'}($provider->name);
+
+            foreach ($provider->scanBuildItems($rootDir) as $node => $location) {
+                $merger($node, $location);
+            }
+        }
+
+        // Manifest packages
         foreach ($this->manifest->scanPackages() as $package) {
             $session->newLine();
             $session->{'.brightMagenta|bold'}($package->name);
 
             foreach ($this->manifest->scanPackage($package) as $node => $location) {
-                $session->write(' - ');
-                $session->{'cyan'}(Glitch::normalizePath((string)$node));
-
-                if (!$node->exists()) {
-                    $session->{'.brightRed'}(' skipped');
-                    continue;
-                }
-
-                $session->{'.white'}(' ' . $location);
-
-                $location = ltrim($location, '/');
-
-                if ($node instanceof Dir) {
-                    $node->mergeInto($destinationPath . '/' . $location);
-                } else {
-                    $node->copy($destination . '/' . $location);
-                }
+                $merger($node, $location);
             }
         }
 
 
+
+
         // Create entry
-        $entryName = $this->manifest->getEntryFileName();
+        $entryName = $bootstrap->buildEntry;
         $file = $destination->getFile($entryName . '.disabled');
 
         $session->write(' - ');
         $session->{'cyan'}($entryName);
         $session->{'.white'}(' ' . $entryName);
 
-        $this->manifest->writeEntryFile($file);
+        $this->manifest->writeEntryFile($file, $this->buildId);
 
         $session->newLine();
         $session->newLine();
@@ -202,8 +231,6 @@ class Handler
         $session->newLine();
         $session->{'.yellow|italic|dim'}('⇒ Activating new build'); // @ignore-non-ascii
 
-
-
         // Get source dir
         $source = $this->manifest->getBuildTempDir()->getDir($this->buildId);
 
@@ -213,90 +240,9 @@ class Handler
             );
         }
 
-
-        // Prepare
-        $rootDir = $this->manifest->getRunDir();
-        $entryName = $this->manifest->getEntryFileName();
-
-        $runName1 = $this->manifest->getRunName1();
-        $runDir1 = $rootDir->getDir($runName1);
-        $runFile1 = $runDir1->getFile($entryName);
-
-        $runName2 = $this->manifest->getRunName2();
-        $runDir2 = $rootDir->getDir($runName2);
-        $runFile2 = $runDir2->getFile($entryName);
-
-        clearstatcache(true);
-
-
-
-        // Check for existing
-        $active1Exists = $runFile1->exists();
-        $active2Exists = $runFile2->exists();
-
-        if (
-            $active1Exists &&
-            $active2Exists
-        ) {
-            $runFile2->renameTo('Run.php.disabled');
-            $active2Exists = false;
-            clearstatcache(true);
-        }
-
-        if ($active1Exists) {
-            $current = $runDir1;
-            $old = $runDir2;
-        } elseif ($active2Exists) {
-            $current = $runDir2;
-            $old = $runDir1;
-        } else {
-            $current = null;
-            $old = $runDir1;
-        }
-
-        $targetName = $old->getName();
-        $session->{'.cyan'}($old->getPath());
-
-        // Move previous out the way
-        if ($old->exists()) {
-            $session->write(' - ');
-            $session->{'yellow'}($old->getName());
-            $session->write(' > ');
-            $session->{'.red'}('deleted');
-
-            $old->delete();
-        }
-
-
-        // Move source to runDir
-        $session->write(' - ');
-        $session->{'yellow'}($this->buildId);
-        $session->write(' > ');
-        $session->{'.green'}($targetName);
-
-        $source->moveTo((string)$rootDir, $targetName);
-        sleep(1);
-
-
-        // Enable entry file
-        $session->write(' - ');
-        $session->{'white|dim'}($targetName . '/' . $entryName . '.disabled');
-        $session->write(' > ');
-        $session->{'.green'}($targetName . '/' . $entryName);
-
-        $source->getFile($entryName . '.disabled')->renameTo($entryName);
-
-
-        // Disable active entry file
-        if ($current !== null) {
-            $session->write(' - ');
-            $session->{'yellow'}($current->getName() . '/' . $entryName);
-            $session->write(' > ');
-            $session->{'.white|dim'}($current->getName() . '/' . $entryName . '.disabled');
-
-            $current->getFile($entryName)->renameTo($entryName . '.disabled');
-        }
-
+        // Activate build
+        $strategy = $this->loadStrategy();
+        $strategy->activate($source, $session);
 
         // Clear caches
         clearstatcache(true);
@@ -341,6 +287,9 @@ class Handler
         $session = $this->manifest->getCliSession();
         $session->newLine();
 
+        $tasks = iterator_to_array($tasks);
+        uasort($tasks, fn($a, $b) => $b->priority <=> $a->priority);
+
         foreach ($tasks as $task) {
             $session->{'.yellow|italic|dim'}('⇒ ' . $task->description); // @ignore-non-ascii
 
@@ -367,53 +316,45 @@ class Handler
         $session->newLine();
         $session->{'.yellow|italic|dim'}('⇒ Clearing builds'); // @ignore-non-ascii
 
-        $rootDir = $this->manifest->getRunDir();
-        $entryName = $this->manifest->getEntryFileName();
-
-        $runName1 = $this->manifest->getRunName1();
-        $runDir1 = $rootDir->getDir($runName1);
-        $runFile1 = $runDir1->getFile($entryName);
-
-        $runName2 = $this->manifest->getRunName2();
-        $runDir2 = $rootDir->getDir($runName2);
-        $runFile2 = $runDir2->getFile($entryName);
-        $found = false;
+        $this->loadStrategy()->clear($session);
+    }
 
 
-        if ($runFile1->existS()) {
-            $runFile1->delete();
-            $session->deleteSuccess((string)$runFile1);
-            $found = true;
+    protected function getBuildableBootstrap(): Buildable
+    {
+        if (!Genesis::$bootstrap instanceof Buildable) {
+            throw Exceptional::Runtime(
+                message: 'Build handler can only be used with buildable bootstrap'
+            );
         }
 
-        if ($runFile2->existS()) {
-            $runFile2->delete();
-            $session->deleteSuccess((string)$runFile2);
-            $found = true;
-        }
+        return Genesis::$bootstrap;
+    }
 
-        if ($runDir1->existS()) {
-            $runDir1->delete();
-            $session->deleteSuccess((string)$runDir1);
-            $found = true;
-        }
+    protected function loadStrategy(): Strategy
+    {
+        $bootstrap = $this->getBuildableBootstrap();
 
-        if ($runDir2->existS()) {
-            $runDir2->delete();
-            $session->deleteSuccess((string)$runDir2);
-            $found = true;
-        }
+        $class = Archetype::resolve(
+            Strategy::class,
+            $bootstrap->buildStrategy
+        );
 
-        if ($rootDir->existS()) {
-            $rootDir->delete();
-            $session->deleteSuccess((string)$rootDir);
-            $found = true;
-        }
+        return new $class(
+            $bootstrap,
+            $this->manifest
+        );
+    }
 
-        if (!$found) {
-            $session->info('No builds found');
+    /**
+     * @return Generator<Provider>
+     */
+    protected function scanProviders(): Generator
+    {
+        foreach(Archetype::scanClasses(
+            Provider::class
+        ) as $class) {
+            yield new $class();
         }
-
-        $session->newLine();
     }
 }

@@ -1,3 +1,12 @@
+## v0.12.0 (2025-04-09)
+* Simplified bootstrap structure
+* Added build strategy system
+* Moved build implementation to strategy interface
+* Added build task scanning facility
+* Simplified Build Manifest interface
+* Moved path aliases to Monarch
+* Removed container Plugin access
+
 ## v0.11.3 (2025-04-01)
 * Added path alias system
 

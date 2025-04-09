@@ -48,9 +48,6 @@ use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 interface Hub
 {
     public string $applicationName { get; }
-    public string $applicationPath { get; }
-    public string $localDataPath { get; }
-    public string $sharedDataPath { get; }
     public ?BuildManifest $buildManifest { get; }
 
     public function initializeLoaders(StackLoader $loader): void;
@@ -80,7 +77,7 @@ interface Kernel
 
     public function initialize(): void;
     public function run(): void;
-    public function shutdown(): void;
+    public function shutdown(): never;
 }
 ```
 
@@ -117,15 +114,15 @@ $cacheBuster = Genesis::$build->getCacheBuster();
 With the necessary interfaces in place, your entry file just requires the following:
 
 ```php
-// Composer autoload
-require_once 'path/to/vendor/autoload.php';
+// Load Bootstrap strategy
+require_once dirname(__DIR__) . '/vendor/decodelabs/genesis/src/Bootstrap/Seamless.php';
 
-use DecodeLabs\Genesis;
+use DecodeLabs\Genesis\Bootstrap\Seamless;
 use My\Hub;
 
-Genesis::run(Hub::class, [
-    // any options your custom hub needs
-]);
+new Seamless(
+    hubClass: Hub::class
+)->run();
 ```
 
 

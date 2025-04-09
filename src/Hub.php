@@ -16,20 +16,14 @@ use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 
 interface Hub extends Cast
 {
-    public string $applicationName { get; }
-    public string $applicationPath { get; }
-    public string $localDataPath { get; }
-    public string $sharedDataPath { get; }
     public ?BuildManifest $buildManifest { get; }
 
     /**
      * Init with options
-     *
-     * @param array<string, mixed> $options
      */
     public function __construct(
         Context $context,
-        array $options
+        Bootstrap $bootstrap
     );
 
     /**
