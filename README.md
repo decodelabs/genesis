@@ -11,8 +11,6 @@
 
 Genesis provides everything you need to bootstrap your application at runtime. Take the guesswork out of how best to structure the lowest level code in your framework and app.
 
-_Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com)._
-
 ---
 
 
