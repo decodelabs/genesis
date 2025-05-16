@@ -1,117 +1,289 @@
-## v0.12.1 (2025-04-09)
-* Moved Environment Mode to Monarch
+# Changelog
 
-## v0.12.0 (2025-04-09)
-* Simplified bootstrap structure
-* Added build strategy system
-* Moved build implementation to strategy interface
-* Added build task scanning facility
-* Simplified Build Manifest interface
-* Moved path aliases to Monarch
-* Removed container Plugin access
+All notable changes to this project will be documented in this file.<br>
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.11.3 (2025-04-01)
-* Added path alias system
+### Unreleased
+--
 
-## v0.11.2 (2025-03-11)
-* Simplified vendor path logic in Bootstrap
+---
 
-## v0.11.1 (2025-03-03)
-* Initiate with development EnvironmentConfig
+### [v0.12.1](https://github.com/decodelabs/genesis/commits/v0.12.1) - 9th April 2025
 
-## v0.11.0 (2025-02-20)
-* Replaced remaining accessors with property hooks
-* Upgraded Coercion dependency
+- Moved Environment Mode to Monarch
 
-## v0.10.0 (2025-02-13)
-* Replaced accessors with properties
-* Upgraded PHPStan to v2
-* Tidied boolean logic
-* Fixed Exceptional syntax
-* Added PHP8.4 to CI workflow
-* Made PHP8.4 minimum version
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.12.0...v0.12.1)
 
-## v0.9.2 (2025-02-07)
-* Removed ref to E_STRICT
+---
 
-## v0.9.1 (2025-02-07)
-* Fixed implicit nullable arguments
+### [v0.12.0](https://github.com/decodelabs/genesis/commits/v0.12.0) - 9th April 2025
 
-## v0.9.0 (2024-08-21)
-* Converted RunMode to enum
-* Updated Veneer dependency and Stub
-* Removed unneeded LazyLoad binding attribute
-* Updated dependency versions
+- Simplified bootstrap structure
+- Added build strategy system
+- Moved build implementation to strategy interface
+- Added build task scanning facility
+- Simplified Build Manifest interface
+- Moved path aliases to Monarch
+- Removed container Plugin access
 
-## v0.8.6 (2024-07-17)
-* Updated Veneer dependency
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.11.3...v0.12.0)
 
-## v0.8.5 (2024-04-29)
-* Fixed Veneer stubs in gitattributes
+---
 
-## v0.8.4 (2024-04-26)
-* Updated Archetype dependency
-* Made PHP8.1 minimum version
+### [v0.11.3](https://github.com/decodelabs/genesis/commits/v0.11.3) - 1st April 2025
 
-## v0.8.3 (2023-11-07)
-* Bind Context in Container on launch
+- Added path alias system
 
-## v0.8.2 (2023-11-04)
-* Deprecated execute() in favour of run()
-* Added default execute() to Bootstrap
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.11.2...v0.11.3)
 
-## v0.8.1 (2023-11-04)
-* Return Kernel from initialize()
+---
 
-## v0.8.0 (2023-10-18)
-* Refactored package file structure
+### [v0.11.2](https://github.com/decodelabs/genesis/commits/v0.11.2) - 11th March 2025
 
-## v0.7.4 (2023-10-16)
-* Updated Atlas dependency
+- Simplified vendor path logic in Bootstrap
 
-## v0.7.3 (2023-10-05)
-* Updated Terminus dependency
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.11.1...v0.11.2)
 
-## v0.7.2 (2023-09-26)
-* Converted phpstan doc comments to generic
+---
 
-## v0.7.1 (2022-11-25)
-* Added FileTemplate base
+### [v0.11.1](https://github.com/decodelabs/genesis/commits/v0.11.1) - 3rd March 2025
 
-## v0.7.0 (2022-11-22)
-* Added fluidity cast to Hub
-* Migrated to use effigy in CI workflow
-* Fixed PHP8.1 testing
+- Initiate with development EnvironmentConfig
 
-## v0.6.2 (2022-11-01)
-* Added node exists check to build process
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.11.0...v0.11.1)
 
-## v0.6.1 (2022-10-12)
-* Removed intiializeErrorHandler from Hub
+---
 
-## v0.6.0 (2022-10-12)
-* Updated initialisation interface
+### [v0.11.0](https://github.com/decodelabs/genesis/commits/v0.11.0) - 20th February 2025
 
-## v0.5.0 (2022-10-04)
-* Added BuildManifest to Hub interface
+- Replaced remaining accessors with property hooks
+- Upgraded Coercion dependency
 
-## v0.4.1 (2022-10-03)
-* Added build Handler structure
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.10.0...v0.11.0)
 
-## v0.4.0 (2022-09-30)
-* Updated kernel interface
+---
 
-## v0.3.0 (2022-09-30)
-* Updated Environment and Hub interfaces
+### [v0.10.0](https://github.com/decodelabs/genesis/commits/v0.10.0) - 13th February 2025
 
-## v0.2.1 (2022-09-30)
-* Set build compiled if build time set
+- Replaced accessors with properties
+- Upgraded PHPStan to v2
+- Tidied boolean logic
+- Fixed Exceptional syntax
+- Added PHP8.4 to CI workflow
+- Made PHP8.4 minimum version
 
-## v0.2.0 (2022-09-30)
-* Added basic build info to context
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.9.2...v0.10.0)
 
-## v0.1.1 (2022-09-29)
-* Added env config overrides
+---
 
-## v0.1.0 (2022-09-29)
-* Built initial codebase
+### [v0.9.2](https://github.com/decodelabs/genesis/commits/v0.9.2) - 7th February 2025
+
+- Removed ref to E_STRICT
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.9.1...v0.9.2)
+
+---
+
+### [v0.9.1](https://github.com/decodelabs/genesis/commits/v0.9.1) - 7th February 2025
+
+- Fixed implicit nullable arguments
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.9.0...v0.9.1)
+
+---
+
+### [v0.9.0](https://github.com/decodelabs/genesis/commits/v0.9.0) - 21st August 2024
+
+- Converted RunMode to enum
+- Updated Veneer dependency and Stub
+- Removed unneeded LazyLoad binding attribute
+- Updated dependency versions
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.6...v0.9.0)
+
+---
+
+### [v0.8.6](https://github.com/decodelabs/genesis/commits/v0.8.6) - 17th July 2024
+
+- Updated Veneer dependency
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.5...v0.8.6)
+
+---
+
+### [v0.8.5](https://github.com/decodelabs/genesis/commits/v0.8.5) - 29th April 2024
+
+- Fixed Veneer stubs in gitattributes
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.4...v0.8.5)
+
+---
+
+### [v0.8.4](https://github.com/decodelabs/genesis/commits/v0.8.4) - 26th April 2024
+
+- Updated Archetype dependency
+- Made PHP8.1 minimum version
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.3...v0.8.4)
+
+---
+
+### [v0.8.3](https://github.com/decodelabs/genesis/commits/v0.8.3) - 7th November 2023
+
+- Bind Context in Container on launch
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.2...v0.8.3)
+
+---
+
+### [v0.8.2](https://github.com/decodelabs/genesis/commits/v0.8.2) - 4th November 2023
+
+- Deprecated execute() in favour of run()
+- Added default execute() to Bootstrap
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.1...v0.8.2)
+
+---
+
+### [v0.8.1](https://github.com/decodelabs/genesis/commits/v0.8.1) - 4th November 2023
+
+- Return Kernel from initialize()
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.8.0...v0.8.1)
+
+---
+
+### [v0.8.0](https://github.com/decodelabs/genesis/commits/v0.8.0) - 18th October 2023
+
+- Refactored package file structure
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.7.4...v0.8.0)
+
+---
+
+### [v0.7.4](https://github.com/decodelabs/genesis/commits/v0.7.4) - 16th October 2023
+
+- Updated Atlas dependency
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.7.3...v0.7.4)
+
+---
+
+### [v0.7.3](https://github.com/decodelabs/genesis/commits/v0.7.3) - 5th October 2023
+
+- Updated Terminus dependency
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.7.2...v0.7.3)
+
+---
+
+### [v0.7.2](https://github.com/decodelabs/genesis/commits/v0.7.2) - 26th September 2023
+
+- Converted phpstan doc comments to generic
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.7.1...v0.7.2)
+
+---
+
+### [v0.7.1](https://github.com/decodelabs/genesis/commits/v0.7.1) - 25th November 2022
+
+- Added FileTemplate base
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.7.0...v0.7.1)
+
+---
+
+### [v0.7.0](https://github.com/decodelabs/genesis/commits/v0.7.0) - 22nd November 2022
+
+- Added fluidity cast to Hub
+- Migrated to use effigy in CI workflow
+- Fixed PHP8.1 testing
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.6.2...v0.7.0)
+
+---
+
+### [v0.6.2](https://github.com/decodelabs/genesis/commits/v0.6.2) - 1st November 2022
+
+- Added node exists check to build process
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.6.1...v0.6.2)
+
+---
+
+### [v0.6.1](https://github.com/decodelabs/genesis/commits/v0.6.1) - 12th October 2022
+
+- Removed intiializeErrorHandler from Hub
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.6.0...v0.6.1)
+
+---
+
+### [v0.6.0](https://github.com/decodelabs/genesis/commits/v0.6.0) - 12th October 2022
+
+- Updated initialisation interface
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.5.0...v0.6.0)
+
+---
+
+### [v0.5.0](https://github.com/decodelabs/genesis/commits/v0.5.0) - 4th October 2022
+
+- Added BuildManifest to Hub interface
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.4.1...v0.5.0)
+
+---
+
+### [v0.4.1](https://github.com/decodelabs/genesis/commits/v0.4.1) - 3rd October 2022
+
+- Added build Handler structure
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.4.0...v0.4.1)
+
+---
+
+### [v0.4.0](https://github.com/decodelabs/genesis/commits/v0.4.0) - 30th September 2022
+
+- Updated kernel interface
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.3.0...v0.4.0)
+
+---
+
+### [v0.3.0](https://github.com/decodelabs/genesis/commits/v0.3.0) - 30th September 2022
+
+- Updated Environment and Hub interfaces
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.2.1...v0.3.0)
+
+---
+
+### [v0.2.1](https://github.com/decodelabs/genesis/commits/v0.2.1) - 30th September 2022
+
+- Set build compiled if build time set
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.2.0...v0.2.1)
+
+---
+
+### [v0.2.0](https://github.com/decodelabs/genesis/commits/v0.2.0) - 30th September 2022
+
+- Added basic build info to context
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.1.1...v0.2.0)
+
+---
+
+### [v0.1.1](https://github.com/decodelabs/genesis/commits/v0.1.1) - 29th September 2022
+
+- Added env config overrides
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.1.0...v0.1.1)
+
+---
+
+### [v0.1.0](https://github.com/decodelabs/genesis/commits/v0.1.0) - 29th September 2022
+
+- Built initial codebase
