@@ -18,7 +18,6 @@ use DecodeLabs\Genesis\Build\Task\PostCompile;
 use DecodeLabs\Genesis\Build\Task\PreCompile;
 use DecodeLabs\Genesis\Build\Task\Scannable;
 use DecodeLabs\Monarch;
-use DecodeLabs\Terminus;
 use DecodeLabs\Terminus\Session;
 use Generator;
 
@@ -26,7 +25,7 @@ trait ManifestTrait
 {
     public function getCliSession(): Session
     {
-        return Terminus::getSession();
+        return Session::getDefault();
     }
 
     public function generateBuildId(): string

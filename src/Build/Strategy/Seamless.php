@@ -75,13 +75,13 @@ class Seamless implements Strategy
             $old = $buildDir1;
         }
 
-        $targetName = $old->getName();
-        $session->{'.cyan'}($old->getPath());
+        $targetName = $old->name;
+        $session->{'.cyan'}($old->path);
 
         // Move previous out the way
         if ($old->exists()) {
             $session->write(' - ');
-            $session->{'yellow'}($old->getName());
+            $session->{'yellow'}($old->name);
             $session->write(' > ');
             $session->{'.red'}('deleted');
 
@@ -91,7 +91,7 @@ class Seamless implements Strategy
 
         // Move source to runDir
         $session->write(' - ');
-        $session->{'yellow'}($source->getName());
+        $session->{'yellow'}($source->name);
         $session->write(' > ');
         $session->{'.green'}($targetName);
 
@@ -111,9 +111,9 @@ class Seamless implements Strategy
         // Disable active entry file
         if ($current !== null) {
             $session->write(' - ');
-            $session->{'yellow'}($current->getName() . '/' . $entryName);
+            $session->{'yellow'}($current->name . '/' . $entryName);
             $session->write(' > ');
-            $session->{'.white|dim'}($current->getName() . '/' . $entryName . '.disabled');
+            $session->{'.white|dim'}($current->name . '/' . $entryName . '.disabled');
 
             $current->getFile($entryName)->renameTo($entryName . '.disabled');
         }
