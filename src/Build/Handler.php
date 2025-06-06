@@ -16,7 +16,6 @@ use DecodeLabs\Atlas\File;
 use DecodeLabs\Exceptional;
 use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Bootstrap\Buildable;
-use DecodeLabs\Glitch\Proxy as Glitch;
 use DecodeLabs\Monarch;
 use Generator;
 use Throwable;
@@ -160,7 +159,7 @@ class Handler
             string $location
         ) use ($session, $destination, $destinationPath) {
             $session->write(' - ');
-            $session->{'cyan'}(Glitch::normalizePath((string)$node));
+            $session->{'cyan'}(Monarch::$paths->prettify((string)$node));
 
             if (!$node->exists()) {
                 $session->{'.brightRed'}(' skipped');
@@ -296,7 +295,7 @@ class Handler
             try {
                 $task->run($session);
             } catch (Throwable $e) {
-                Glitch::logException($e);
+                Monarch::logException($e);
                 $session->error($e->getMessage());
             }
 
