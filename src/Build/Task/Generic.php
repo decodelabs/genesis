@@ -16,7 +16,7 @@ use DecodeLabs\Terminus\Session;
 class Generic implements Task
 {
     public int $priority;
-    protected(set) string $description;
+    public protected(set) string $description;
     protected Closure $callback;
 
     /**

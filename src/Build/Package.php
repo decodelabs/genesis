@@ -13,9 +13,9 @@ use DecodeLabs\Atlas\Dir;
 
 class Package
 {
-    protected(set) string $name;
-    protected(set) Dir $source;
-    protected(set) ?string $targetPath;
+    public protected(set) string $name;
+    public protected(set) Dir $source;
+    public protected(set) ?string $targetPath;
 
     /**
      * Init with name and source location

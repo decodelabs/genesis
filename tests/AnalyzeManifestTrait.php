@@ -23,4 +23,4 @@ class AnalyzeManifestTrait implements Manifest
     ): void {
         // No-op
     }
-};
+}

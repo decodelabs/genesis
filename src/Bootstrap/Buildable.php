@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis\Bootstrap;
 
-require_once dirname(__DIR__).'/Bootstrap.php';
+require_once dirname(__DIR__) . '/Bootstrap.php';
 
 use DecodeLabs\Genesis\Bootstrap;
 

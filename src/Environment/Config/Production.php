@@ -16,7 +16,7 @@ class Production implements Config
 {
     protected const DefaultName = 'production';
 
-    protected(set) ?string $name {
+    public protected(set) ?string $name {
         get => $this->name ?? $this->getDefaultName();
     }
 
@@ -26,8 +26,8 @@ class Production implements Config
 
     public ?int $umask = null;
     public ?bool $displayErrors = null;
-    protected(set) ?int $errorReporting = E_ALL & ~E_NOTICE & ~E_DEPRECATED;
-    protected(set) ?string $defaultTimezone = 'UTC';
+    public protected(set) ?int $errorReporting = E_ALL & ~E_NOTICE & ~E_DEPRECATED;
+    public protected(set) ?string $defaultTimezone = 'UTC';
 
     public function __construct(
         ?string $name = null
@@ -35,7 +35,8 @@ class Production implements Config
         $this->name = $name;
     }
 
-    protected function getDefaultName(): string {
+    protected function getDefaultName(): string
+    {
         /** @var string $output */
         $output = static::DefaultName;
         return $output;

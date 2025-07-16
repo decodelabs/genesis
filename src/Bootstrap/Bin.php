@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis\Bootstrap;
 
-require_once dirname(__DIR__).'/Bootstrap.php';
+require_once dirname(__DIR__) . '/Bootstrap.php';
 
 use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Bootstrap;
@@ -21,8 +21,8 @@ class Bin implements Bootstrap
     /**
      * @var class-string<Hub>
      */
-    protected(set) string $hubClass;
-    protected(set) string $rootPath;
+    public protected(set) string $hubClass;
+    public protected(set) string $rootPath;
 
     /**
      * @param class-string<Hub> $hubClass
@@ -36,7 +36,7 @@ class Bin implements Bootstrap
         if ($rootPath === null) {
             $rootPath = getcwd();
 
-            if($rootPath === false) {
+            if ($rootPath === false) {
                 throw new RuntimeException('Unable to determine current working directory');
             }
         }

@@ -44,9 +44,10 @@ class Context
     /**
      * Init with optional Container
      */
-    public function __construct() {
+    public function __construct()
+    {
         // Get a Pandora container in ASAP if available
-        if(class_exists(Container::class)) {
+        if (class_exists(Container::class)) {
             Monarch::replaceContainer(new Container());
         }
 

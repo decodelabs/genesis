@@ -24,7 +24,7 @@ class Seamless implements Strategy
     public function __construct(
         Bootstrap $bootstrap
     ) {
-        if(!$bootstrap instanceof SeamlessBootstrap) {
+        if (!$bootstrap instanceof SeamlessBootstrap) {
             throw Exceptional::InvalidArgument('Bootstrap must be Seamless');
         }
 
@@ -36,7 +36,7 @@ class Seamless implements Strategy
         Session $session
     ): void {
         // Prepare
-        $runDir = Atlas::dir($this->bootstrap->rootPath.'/'.$this->bootstrap->runDir);
+        $runDir = Atlas::dir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
         $entryName = $this->bootstrap->buildEntry;
 
         $runName1 = $this->bootstrap->buildPrefix . '1';
@@ -59,7 +59,7 @@ class Seamless implements Strategy
             $active1Exists &&
             $active2Exists
         ) {
-            $entryFile2->renameTo($entryName.'.disabled');
+            $entryFile2->renameTo($entryName . '.disabled');
             $active2Exists = false;
             clearstatcache(true);
         }
@@ -123,7 +123,7 @@ class Seamless implements Strategy
     public function clear(
         Session $session
     ): void {
-        $runDir = Atlas::dir($this->bootstrap->rootPath.'/'.$this->bootstrap->runDir);
+        $runDir = Atlas::dir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
         $entryName = $this->bootstrap->buildEntry;
 
         $runName1 = $this->bootstrap->buildPrefix . '1';

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis\Bootstrap;
 
-require_once dirname(__DIR__).'/Bootstrap.php';
-require_once __DIR__.'/Buildable.php';
+require_once dirname(__DIR__) . '/Bootstrap.php';
+require_once __DIR__ . '/Buildable.php';
 
 use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Bootstrap;
@@ -30,16 +30,16 @@ class Seamless implements
         '--fabric-source'
     ];
 
-    protected(set) string $hubClass;
-    protected(set) string $rootPath;
+    public protected(set) string $hubClass;
+    public protected(set) string $rootPath;
 
-    protected(set) string $runDir;
-    protected(set) string $buildPrefix;
-    protected(set) string $buildEntry;
+    public protected(set) string $runDir;
+    public protected(set) string $buildPrefix;
+    public protected(set) string $buildEntry;
     public string $buildStrategy { get => 'Seamless'; }
 
-    protected(set) string $rootVendorDir;
-    protected(set) string $buildVendorDir;
+    public protected(set) string $rootVendorDir;
+    public protected(set) string $buildVendorDir;
 
     /**
      * @param class-string<Hub> $hubClass
@@ -55,7 +55,7 @@ class Seamless implements
     ) {
         $this->hubClass = $hubClass;
 
-        if($rootPath === null) {
+        if ($rootPath === null) {
             $rootPath = $this->findRootPath();
         }
 
@@ -77,11 +77,11 @@ class Seamless implements
         /** @var non-empty-string|false $entryPath */
         $entryPath = realpath($entryPath);
 
-        if($entryPath === false) {
+        if ($entryPath === false) {
             throw new RuntimeException('Entry path could not be determined');
         }
 
-        if(str_ends_with($entryPath, '/src/Bootstrap.php')) {
+        if (str_ends_with($entryPath, '/src/Bootstrap.php')) {
             return dirname($entryPath, 2);
         }
 
@@ -150,17 +150,17 @@ class Seamless implements
         if (!$sourceMode) {
             $runDir = $this->runDir;
 
-            if(str_starts_with($runDir, './')) {
+            if (str_starts_with($runDir, './')) {
                 $runDir = substr($runDir, 2);
             }
 
-            if(!str_starts_with($runDir, '/')) {
+            if (!str_starts_with($runDir, '/')) {
                 $runDir = $this->rootPath . '/' . $runDir;
             }
 
             $paths = [
-                $runDir . '/'.$this->buildPrefix.'1/'.$this->buildEntry => $runDir . '/'.$this->buildPrefix.'1/' . $this->buildVendorDir,
-                $runDir . '/'.$this->buildPrefix.'2/'.$this->buildEntry => $runDir . '/'.$this->buildPrefix.'2/' . $this->buildVendorDir,
+                $runDir . '/' . $this->buildPrefix . '1/' . $this->buildEntry => $runDir . '/' . $this->buildPrefix . '1/' . $this->buildVendorDir,
+                $runDir . '/' . $this->buildPrefix . '2/' . $this->buildEntry => $runDir . '/' . $this->buildPrefix . '2/' . $this->buildVendorDir,
             ];
         } else {
             $paths = [];

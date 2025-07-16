@@ -14,11 +14,11 @@ use DecodeLabs\Genesis\Build\Handler;
 
 class Build
 {
-    protected(set) ?int $time = null;
-    protected(set) bool $compiled = false;
-    protected(set) string $path;
+    public protected(set) ?int $time = null;
+    public protected(set) bool $compiled = false;
+    public protected(set) string $path;
 
-    protected(set) int $cacheBuster {
+    public protected(set) int $cacheBuster {
         get {
             if (!isset($this->cacheBuster)) {
                 $this->cacheBuster = $this->time ?? time();
@@ -28,9 +28,9 @@ class Build
         }
     }
 
-    protected(set) Handler $handler {
+    public protected(set) Handler $handler {
         get {
-            if(!isset($this->handler)) {
+            if (!isset($this->handler)) {
                 if (null === ($manifest = $this->context->hub->buildManifest)) {
                     throw Exceptional::Setup(
                         message: 'Hub does not provide a build manifest'

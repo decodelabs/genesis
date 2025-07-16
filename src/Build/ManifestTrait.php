@@ -62,8 +62,8 @@ trait ManifestTrait
      */
     public function scanPreCompileTasks(): Generator
     {
-        foreach($this->scanAllTasks() as $class) {
-            if(!is_a($class, PreCompile::class, true)) {
+        foreach ($this->scanAllTasks() as $class) {
+            if (!is_a($class, PreCompile::class, true)) {
                 continue;
             }
 
@@ -76,8 +76,8 @@ trait ManifestTrait
      */
     public function scanPostCompileTasks(): Generator
     {
-        foreach($this->scanAllTasks() as $class) {
-            if(!is_a($class, PostCompile::class, true)) {
+        foreach ($this->scanAllTasks() as $class) {
+            if (!is_a($class, PostCompile::class, true)) {
                 continue;
             }
 
@@ -90,8 +90,8 @@ trait ManifestTrait
      */
     public function scanPostActivationTasks(): Generator
     {
-        foreach($this->scanAllTasks() as $class) {
-            if(!is_a($class, PostActivation::class, true)) {
+        foreach ($this->scanAllTasks() as $class) {
+            if (!is_a($class, PostActivation::class, true)) {
                 continue;
             }
 
@@ -104,8 +104,8 @@ trait ManifestTrait
      */
     protected function scanAllTasks(): Generator
     {
-        foreach(Archetype::scanClasses(Task::class) as $class) {
-            if(!is_a($class, Scannable::class, true)) {
+        foreach (Archetype::scanClasses(Task::class) as $class) {
+            if (!is_a($class, Scannable::class, true)) {
                 continue;
             }
 

@@ -22,9 +22,9 @@ use Throwable;
 
 class Handler
 {
-    protected(set) string $buildId;
+    public protected(set) string $buildId;
     public bool $compile = true;
-    protected(set) Manifest $manifest;
+    public protected(set) Manifest $manifest;
 
     /**
      * Init with manifest
@@ -154,7 +154,7 @@ class Handler
 
 
         // Create build
-        $merger = function(
+        $merger = function (
             File|Dir $node,
             string $location
         ) use ($session, $destination, $destinationPath) {
@@ -181,7 +181,7 @@ class Handler
         // Provider files
         $rootDir = Atlas::dir(Monarch::$paths->root);
 
-        foreach($this->scanProviders() as $provider) {
+        foreach ($this->scanProviders() as $provider) {
             $session->newLine();
             $session->{'.brightMagenta|bold'}($provider->name);
 
@@ -287,7 +287,7 @@ class Handler
         $session->newLine();
 
         $tasks = iterator_to_array($tasks);
-        uasort($tasks, fn($a, $b) => $b->priority <=> $a->priority);
+        uasort($tasks, fn ($a, $b) => $b->priority <=> $a->priority);
 
         foreach ($tasks as $task) {
             $session->{'.yellow|italic|dim'}('⇒ ' . $task->description); // @ignore-non-ascii
@@ -350,7 +350,7 @@ class Handler
      */
     protected function scanProviders(): Generator
     {
-        foreach(Archetype::scanClasses(
+        foreach (Archetype::scanClasses(
             Provider::class
         ) as $class) {
             yield new $class();
