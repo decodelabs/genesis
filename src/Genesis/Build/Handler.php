@@ -14,7 +14,7 @@ use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\Dir;
 use DecodeLabs\Atlas\File;
 use DecodeLabs\Exceptional;
-use DecodeLabs\Genesis;
+use DecodeLabs\Genesis\Bootstrap;
 use DecodeLabs\Genesis\Bootstrap\Buildable;
 use DecodeLabs\Monarch;
 use Generator;
@@ -25,46 +25,35 @@ class Handler
     public protected(set) string $buildId;
     public bool $compile = true;
     public protected(set) Manifest $manifest;
+    public protected(set) Bootstrap $bootstrap;
 
-    /**
-     * Init with manifest
-     */
     public function __construct(
-        Manifest $manifest
+        Manifest $manifest,
+        Bootstrap $bootstrap,
+        protected Archetype $archetype
     ) {
         $this->manifest = $manifest;
+        $this->bootstrap = $bootstrap;
         $this->buildId = $manifest->generateBuildId();
-        $this->compile = Genesis::$bootstrap instanceof Buildable;
+        $this->compile = $bootstrap instanceof Buildable;
     }
 
-    /**
-     * Get manifest
-     */
     public function getManifest(): Manifest
     {
         return $this->manifest;
     }
 
-    /**
-     * Get build ID
-     */
     public function getBuildId(): string
     {
         return $this->buildId;
     }
 
-    /**
-     * Set compile
-     */
     public function setCompile(
         bool $compile
     ): void {
         $this->compile = $compile;
     }
 
-    /**
-     * Should compile
-     */
     public function shouldCompile(): bool
     {
         return $this->compile;
@@ -72,9 +61,6 @@ class Handler
 
 
 
-    /**
-     * Run full build process
-     */
     public function run(): void
     {
         $session = $this->manifest->getCliSession();
@@ -117,18 +103,12 @@ class Handler
 
 
 
-    /**
-     * Run pre compile tasks
-     */
     public function runPreCompileTasks(): void
     {
         $this->runTaskList($this->manifest->scanPreCompileTasks());
     }
 
 
-    /**
-     * Run compilation
-     */
     public function compile(): Dir
     {
         $bootstrap = $this->getBuildableBootstrap();
@@ -159,7 +139,7 @@ class Handler
             string $location
         ) use ($session, $destination, $destinationPath) {
             $session->write(' - ');
-            $session->{'cyan'}(Monarch::$paths->prettify((string)$node));
+            $session->{'cyan'}(Monarch::getPaths()->prettify((string)$node));
 
             if (!$node->exists()) {
                 $session->{'.brightRed'}(' skipped');
@@ -179,7 +159,7 @@ class Handler
 
 
         // Provider files
-        $rootDir = Atlas::dir(Monarch::$paths->root);
+        $rootDir = Atlas::getDir(Monarch::getPaths()->root);
 
         foreach ($this->scanProviders() as $provider) {
             $session->newLine();
@@ -221,9 +201,6 @@ class Handler
 
 
 
-    /**
-     * Run build activation
-     */
     public function activate(): void
     {
         $session = $this->manifest->getCliSession();
@@ -258,26 +235,18 @@ class Handler
     }
 
 
-    /**
-     * Run post compile tasks
-     */
     public function runPostCompileTasks(): void
     {
         $this->runTaskList($this->manifest->scanPostCompileTasks());
     }
 
 
-    /**
-     * Run post activation tasks
-     */
     public function runPostActivationTasks(): void
     {
         $this->runTaskList($this->manifest->scanPostActivationTasks());
     }
 
     /**
-     * Run task list
-     *
      * @param Generator<Task> $tasks
      */
     protected function runTaskList(
@@ -306,9 +275,6 @@ class Handler
 
 
 
-    /**
-     * Clear builds
-     */
     public function clear(): void
     {
         $session = $this->manifest->getCliSession();
@@ -321,20 +287,20 @@ class Handler
 
     protected function getBuildableBootstrap(): Buildable
     {
-        if (!Genesis::$bootstrap instanceof Buildable) {
+        if (!($this->bootstrap instanceof Buildable)) {
             throw Exceptional::Runtime(
                 message: 'Build handler can only be used with buildable bootstrap'
             );
         }
 
-        return Genesis::$bootstrap;
+        return $this->bootstrap;
     }
 
     protected function loadStrategy(): Strategy
     {
         $bootstrap = $this->getBuildableBootstrap();
 
-        $class = Archetype::resolve(
+        $class = $this->archetype->resolve(
             Strategy::class,
             $bootstrap->buildStrategy
         );
@@ -350,7 +316,7 @@ class Handler
      */
     protected function scanProviders(): Generator
     {
-        foreach (Archetype::scanClasses(
+        foreach ($this->archetype->scanClasses(
             Provider::class
         ) as $class) {
             yield new $class();

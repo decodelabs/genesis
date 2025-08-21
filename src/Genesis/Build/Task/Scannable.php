@@ -13,5 +13,4 @@ use DecodeLabs\Genesis\Build\Task;
 
 interface Scannable extends Task
 {
-    public function __construct();
 }

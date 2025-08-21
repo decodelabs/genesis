@@ -59,7 +59,11 @@ You will also need some CLI tasks to build your app and clear builds when necess
 In the body of your task (assuming your app is bootstrapped and running some sort of CLI handling Kernel):
 
 ```php
-Genesis::$build->handler->run();
+use DecodeLabs\Genesis;
+use DecodeLabs\Monarch;
+
+$genesis = Monarch::getService(Genesis::class);
+$genesis->buildHandler->run();
 ```
 
 This call will work its way through the process, consuming all of the information your `BuildManifest` supplies it, and generates an active build folder.
@@ -67,5 +71,9 @@ This call will work its way through the process, consuming all of the informatio
 Your clear-build task should include:
 
 ```php
-Genesis::$build->handler->clear();
+use DecodeLabs\Genesis;
+use DecodeLabs\Monarch;
+
+$genesis = Monarch::getService(Genesis::class);
+$genesis->buildHandler->clear();
 ```

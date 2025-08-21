@@ -18,11 +18,17 @@ use DecodeLabs\Genesis\Build\Task\PostCompile;
 use DecodeLabs\Genesis\Build\Task\PreCompile;
 use DecodeLabs\Genesis\Build\Task\Scannable;
 use DecodeLabs\Monarch;
+use DecodeLabs\Slingshot;
 use DecodeLabs\Terminus\Session;
 use Generator;
 
 trait ManifestTrait
 {
+    public function __construct(
+        protected Archetype $archetype
+    ) {
+    }
+
     public function getCliSession(): Session
     {
         return Session::getDefault();
@@ -35,7 +41,7 @@ trait ManifestTrait
 
     public function getBuildTempDir(): Dir
     {
-        return Atlas::dir(Monarch::$paths->localData . '/build/');
+        return Atlas::getDir(Monarch::getPaths()->localData . '/build/');
     }
 
 
@@ -62,13 +68,7 @@ trait ManifestTrait
      */
     public function scanPreCompileTasks(): Generator
     {
-        foreach ($this->scanAllTasks() as $class) {
-            if (!is_a($class, PreCompile::class, true)) {
-                continue;
-            }
-
-            yield new $class();
-        }
+        yield from $this->scanAllTasks(PreCompile::class);
     }
 
     /**
@@ -76,13 +76,7 @@ trait ManifestTrait
      */
     public function scanPostCompileTasks(): Generator
     {
-        foreach ($this->scanAllTasks() as $class) {
-            if (!is_a($class, PostCompile::class, true)) {
-                continue;
-            }
-
-            yield new $class();
-        }
+        yield from $this->scanAllTasks(PostCompile::class);
     }
 
     /**
@@ -90,26 +84,32 @@ trait ManifestTrait
      */
     public function scanPostActivationTasks(): Generator
     {
-        foreach ($this->scanAllTasks() as $class) {
-            if (!is_a($class, PostActivation::class, true)) {
-                continue;
-            }
-
-            yield new $class();
-        }
+        yield from $this->scanAllTasks(PostActivation::class);
     }
 
     /**
-     * @return Generator<class-string<Scannable>>
+     * @template T of Scannable
+     * @param class-string<T>|null $type
+     * @return ($type is null ? Generator<Scannable> : Generator<T>)
      */
-    protected function scanAllTasks(): Generator
-    {
-        foreach (Archetype::scanClasses(Task::class) as $class) {
+    protected function scanAllTasks(
+        ?string $type = null
+    ): Generator {
+        $slingshot = new Slingshot(archetype: $this->archetype);
+
+        foreach ($this->archetype->scanClasses(Task::class) as $class) {
             if (!is_a($class, Scannable::class, true)) {
                 continue;
             }
 
-            yield $class;
+            if (
+                $type !== null &&
+                !is_a($class, $type, true)
+            ) {
+                continue;
+            }
+
+            yield $slingshot->resolveInstance($class);
         }
     }
 }

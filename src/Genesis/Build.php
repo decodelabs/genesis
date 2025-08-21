@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis;
 
-use DecodeLabs\Exceptional;
-use DecodeLabs\Genesis\Build\Handler;
+use DecodeLabs\Genesis;
+use DecodeLabs\Monarch\Build as BuildInterface;
+use DecodeLabs\Monarch\EnvironmentMode;
 
-class Build
+class Build implements BuildInterface
 {
     public protected(set) ?int $time = null;
     public protected(set) bool $compiled = false;
@@ -28,33 +29,17 @@ class Build
         }
     }
 
-    public protected(set) Handler $handler {
-        get {
-            if (!isset($this->handler)) {
-                if (null === ($manifest = $this->context->hub->buildManifest)) {
-                    throw Exceptional::Setup(
-                        message: 'Hub does not provide a build manifest'
-                    );
-                }
-
-                $this->handler = new Handler($manifest);
-            }
-
-            return $this->handler;
-        }
-    }
-
-    protected Context $context;
+    protected Genesis $genesis;
 
     /**
      * @param ?int $time Time the active app was built - if running from source, pass null
      */
     public function __construct(
-        Context $context,
+        Genesis $genesis,
         string $path,
         ?int $time = null
     ) {
-        $this->context = $context;
+        $this->genesis = $genesis;
         $this->path = $path;
         $this->time = $time;
         $this->compiled = $time !== null;
@@ -67,6 +52,6 @@ class Build
     {
         return
             $this->compiled ||
-            $this->context->environment->isDevelopment();
+            $this->genesis->environment->mode === EnvironmentMode::Development;
     }
 }

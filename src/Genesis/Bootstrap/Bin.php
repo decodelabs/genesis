@@ -51,13 +51,13 @@ class Bin implements Bootstrap
 
     public function initializeOnly(): void
     {
-        Genesis::bootstrap($this);
+        new Genesis()->bootstrap($this);
     }
 
     public function run(): never
     {
-        $kernel = Genesis::bootstrap($this);
-        $kernel->run();
-        $kernel->shutdown();
+        $kingdom = new Genesis()->bootstrap($this);
+        $kingdom->run();
+        $kingdom->shutdown();
     }
 }

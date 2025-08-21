@@ -10,9 +10,11 @@ declare(strict_types=1);
 namespace DecodeLabs\Genesis;
 
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
+use DecodeLabs\Monarch\Environment as EnvironmentInterface;
 use DecodeLabs\Monarch\EnvironmentMode as Mode;
+use Locale;
 
-class Environment
+class Environment implements EnvironmentInterface
 {
     public protected(set) string $name = 'default';
     public protected(set) Mode $mode = Mode::Production;
@@ -44,6 +46,9 @@ class Environment
             ini_set('display_errors', (string)$displayErrors);
         }
 
+        // Locale
+        Locale::setDefault($config->defaultLocale ?? 'en_US');
+
         // Timezone
         date_default_timezone_set($config->defaultTimezone ?? 'UTC');
 
@@ -51,32 +56,5 @@ class Environment
         if (function_exists('mb_internal_encoding')) {
             mb_internal_encoding('UTF-8');
         }
-    }
-
-
-    /**
-     * Is running in development mode
-     */
-    public function isDevelopment(): bool
-    {
-        return $this->mode === Mode::Development;
-    }
-
-    /**
-     * Is running in testing mode (or development)
-     */
-    public function isTesting(): bool
-    {
-        return
-            $this->mode === Mode::Testing ||
-            $this->mode === Mode::Development;
-    }
-
-    /**
-     * Is running in production mode
-     */
-    public function isProduction(): bool
-    {
-        return $this->mode === Mode::Production;
     }
 }

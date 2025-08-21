@@ -36,7 +36,7 @@ class Seamless implements Strategy
         Session $session
     ): void {
         // Prepare
-        $runDir = Atlas::dir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
+        $runDir = Atlas::getDir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
         $entryName = $this->bootstrap->buildEntry;
 
         $runName1 = $this->bootstrap->buildPrefix . '1';
@@ -123,7 +123,7 @@ class Seamless implements Strategy
     public function clear(
         Session $session
     ): void {
-        $runDir = Atlas::dir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
+        $runDir = Atlas::getDir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
         $entryName = $this->bootstrap->buildEntry;
 
         $runName1 = $this->bootstrap->buildPrefix . '1';

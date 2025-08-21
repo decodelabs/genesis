@@ -18,5 +18,7 @@ interface Config
     public ?bool $displayErrors { get; set; }
     public ?int $errorReporting { get; }
     public ?int $umask { get; set; }
+
+    public ?string $defaultLocale { get; }
     public ?string $defaultTimezone { get; }
 }

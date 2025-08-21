@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Unreleased
---
+- Removed Loader interface
+- Replaced Kernel interface with Kingdom Runtime
+- Simplified Container initialisation
+- Moved FileTemplate to Hatch
+- Added Kingdom Service support
+- Use Archetype as a Service
+- Use Slingshot to resolve Build Tasks
 
 ---
 

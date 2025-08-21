@@ -27,7 +27,9 @@ class Production implements Config
     public ?int $umask = null;
     public ?bool $displayErrors = null;
     public protected(set) ?int $errorReporting = E_ALL & ~E_NOTICE & ~E_DEPRECATED;
-    public protected(set) ?string $defaultTimezone = 'UTC';
+
+    public ?string $defaultLocale = 'en_US';
+    public ?string $defaultTimezone = 'UTC';
 
     public function __construct(
         ?string $name = null

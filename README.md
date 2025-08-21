@@ -24,12 +24,6 @@ composer require decodelabs/genesis
 
 ## Usage
 
-### Importing
-
-Genesis uses [Veneer](https://github.com/decodelabs/veneer) to provide a unified frontage under <code>DecodeLabs\Genesis</code>.
-You can access all the primary functionality via this static frontage without compromising testing and dependency injection.
-
-
 ### Hub
 
 Genesis requires consumers of the library to implement a number of interfaces to represent important parts of the bootstrap process. With these classes in place, it is then able to provide a unified, dependable bootstrap process for all environments.
@@ -39,70 +33,20 @@ Most important is the `Hub` interface:
 ```php
 namespace DecodeLabs\Genesis;
 
-use DecodeLabs\Genesis\Loader\Stack as StackLoader;
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
 use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
+use DecodeLabs\Kingdom;
 
 interface Hub
 {
     public ?BuildManifest $buildManifest { get; }
 
-    public function initializeLoaders(StackLoader $loader): void;
+    public function initializeLoaders(): void;
     public function loadBuild(): Build;
     public function loadEnvironmentConfig(): EnvConfig;
     public function initializePlatform(): void;
-    public function loadKernel(): Kernel;
+    public function loadKingdom(): Kingdom;
 }
-```
-
-The hub provides access to all of the critical information and structures needed to get the app running.
-Once instantiated, the hub can be accessed via the Genesis Veneer frontage:
-
-```php
-$buildManifest = Genesis::$hub->buildManifest;
-```
-
-
-### Kernel
-
-The Kernel is the executor of your app - the Hub sets it up and then the Kernel runs it.
-
-```php
-interface Kernel
-{
-    public string $mode { get; }
-
-    public function initialize(): void;
-    public function run(): void;
-    public function shutdown(): never;
-}
-```
-
-Like the Hub, the Kernel can be accessed like so:
-
-```php
-$runMode = Genesis::$kernel->mode;
-```
-
-
-### Build and environment
-
-During the setup phase, the Hub will provide information and configuration for the `Environment` and `Build` objects:
-
-```php
-if(Genesis::$environment->isDevelopment()) {
-    // Do fun dev stuff
-}
-
-$envName = Genesis::$environment->name;
-$rootPath = Genesis::$build->path;
-
-if(Genesis::$build->isCompiled()) {
-    // We've compiled a build
-}
-
-// Get time of build to use in URLs as a cache buster
-$cacheBuster = Genesis::$build->cacheBuster;
 ```
 
 
