@@ -109,8 +109,6 @@ class Seamless implements
     }
 
     /**
-     * Search for vendor root in possible paths
-     *
      * @param array<string,string> $paths
      */
     protected function loadVendor(

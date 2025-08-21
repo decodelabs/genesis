@@ -20,8 +20,6 @@ class Generic implements Task
     protected Closure $callback;
 
     /**
-     * Init with callable
-     *
      * @param callable(Session $session): void $callback
      */
     public function __construct(
@@ -34,9 +32,6 @@ class Generic implements Task
         $this->priority = $priority;
     }
 
-    /**
-     * Run task
-     */
     public function run(
         Session $session
     ): void {

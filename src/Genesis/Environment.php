@@ -19,9 +19,6 @@ class Environment implements EnvironmentInterface
     public protected(set) string $name = 'default';
     public protected(set) Mode $mode = Mode::Production;
 
-    /**
-     * Init with config
-     */
     public function __construct(
         EnvConfig $config
     ) {

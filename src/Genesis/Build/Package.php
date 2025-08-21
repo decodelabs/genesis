@@ -17,9 +17,6 @@ class Package
     public protected(set) Dir $source;
     public protected(set) ?string $targetPath;
 
-    /**
-     * Init with name and source location
-     */
     public function __construct(
         string $name,
         Dir $source,
