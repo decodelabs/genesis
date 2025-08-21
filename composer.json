@@ -15,8 +15,8 @@
 
         "decodelabs/archetype": "^0.4",
         "decodelabs/atlas": "^0.14",
-        "decodelabs/exceptional": "^0.6.1",
-        "decodelabs/fluidity": "^0.3.6",
+        "decodelabs/exceptional": "^0.6.3",
+        "decodelabs/fluidity": "^0.3.7",
         "decodelabs/kingdom": "^0.1",
         "decodelabs/monarch": "^0.2",
         "decodelabs/slingshot": "^0.3",
