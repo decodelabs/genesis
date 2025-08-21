@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Unreleased
+--
+
+---
+
+### [v0.13.0](https://github.com/decodelabs/genesis/commits/v0.13.0) - 21st August 2025
+
 - Removed Loader interface
 - Replaced Kernel interface with Kingdom Runtime
 - Simplified Container initialisation
@@ -12,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Kingdom Service support
 - Use Archetype as a Service
 - Use Slingshot to resolve Build Tasks
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.12.5...v0.13.0)
 
 ---
 
