@@ -23,14 +23,17 @@
         "decodelabs/terminus": "^0.14"
     },
     "require-dev": {
-        "decodelabs/phpstan-decodelabs": "^0.7"
+        "decodelabs/phpstan-decodelabs": "^0.7",
+        "decodelabs/commandment": "^0.3.0",
+        "decodelabs/systemic": "^0.12.0"
     },
     "autoload": {
         "psr-4": {
             "DecodeLabs\\Genesis\\": "src/Genesis/"
         },
         "classmap": [
-            "src/Genesis.php"
+            "src/Genesis.php",
+            "src/Commandment/"
         ]
     },
     "autoload-dev": {
