@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Unreleased
+--
+
+---
+
+### [v0.13.1](https://github.com/decodelabs/genesis/commits/v0.13.1) - 22nd August 2025
+
 - Ported Build task from Fabric
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.13.0...v0.13.1)
 
 ---
 
