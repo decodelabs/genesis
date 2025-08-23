@@ -46,7 +46,7 @@
     "extra": {
         "class": "DecodeLabs\\Genesis\\Composer\\Plugin",
         "branch-alias": {
-            "dev-develop": "0.13.x-dev"
+            "dev-develop": "0.14.x-dev"
         }
     },
     "config": {
