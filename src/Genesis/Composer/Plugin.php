@@ -45,8 +45,15 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         $type = $package->getType();
 
-        if (!is_string($hubClass)) {
+        if (
+            $type === 'project' &&
+            !is_string($hubClass)
+        ) {
             throw new Exception('Genesis hub class not found in composer.json extra "genesis.hub"');
+        }
+
+        if (!is_string($hubClass)) {
+            return;
         }
 
         $this->generateLoader($root, $vendor, $hubClass);
