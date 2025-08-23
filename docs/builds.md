@@ -11,15 +11,18 @@ The first step is to implement the `Build\Manifest` interface -
 ```php
 use DecodeLabs\Atlas\Dir;
 use DecodeLabs\Atlas\File;
+use DecodeLabs\Genesis\Build\Strategy;
+use DecodeLabs\Genesis\Hub;
 use DecodeLabs\Terminus\Session;
 use Generator;
 
 interface Manifest
 {
+    public Strategy $strategy { get; }
+
     public function getCliSession(): Session;
     public function generateBuildId(): string;
     public function getBuildTempDir(): Dir;
-
 
     /**
      * @return Generator<Task>
@@ -32,11 +35,20 @@ interface Manifest
     public function scanPackages(): Generator;
 
     /**
-     * @return Generator<File|Dir, string>
+     * @return Generator<File|Dir,string>
      */
-    public function scanPackage(Package $package): Generator;
+    public function scanPackage(
+        Package $package
+    ): Generator;
 
-    public function writeEntryFile(File $file): void;
+    /**
+     * @param class-string<Hub> $hubClass
+     */
+    public function writeEntryFile(
+        File $file,
+        string $buildId,
+        string $hubClass
+    ): void;
 
     /**
      * @return Generator<Task>

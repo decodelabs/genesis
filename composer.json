@@ -1,7 +1,7 @@
 {
     "name": "decodelabs/genesis",
     "description": "Universal bootstrapping framework",
-    "type": "library",
+    "type": "composer-plugin",
     "keywords": [ "bootstrap", "framework", "entry" ],
     "license": "MIT",
     "authors": [ {
@@ -12,17 +12,19 @@
     },
     "require": {
         "php": "^8.4",
+        "composer-plugin-api": "^2.0",
 
         "decodelabs/archetype": "^0.4",
         "decodelabs/atlas": "^0.14",
         "decodelabs/exceptional": "^0.6.3",
-        "decodelabs/fluidity": "^0.3.7",
         "decodelabs/kingdom": "^0.1",
         "decodelabs/monarch": "^0.2",
         "decodelabs/slingshot": "^0.3",
         "decodelabs/terminus": "^0.14"
     },
     "require-dev": {
+        "composer/composer": "^2.0",
+
         "decodelabs/phpstan-decodelabs": "^0.7",
         "decodelabs/commandment": "^0.3.0",
         "decodelabs/systemic": "^0.12.0"
@@ -42,6 +44,7 @@
         }
     },
     "extra": {
+        "class": "DecodeLabs\\Genesis\\Composer\\Plugin",
         "branch-alias": {
             "dev-develop": "0.13.x-dev"
         }

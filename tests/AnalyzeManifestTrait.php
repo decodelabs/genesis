@@ -19,7 +19,8 @@ class AnalyzeManifestTrait implements Manifest
 
     public function writeEntryFile(
         File $file,
-        string $buildId
+        string $buildId,
+        string $hubClass
     ): void {
         // No-op
     }

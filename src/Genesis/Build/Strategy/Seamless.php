@@ -11,39 +11,29 @@ namespace DecodeLabs\Genesis\Build\Strategy;
 
 use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\Dir;
-use DecodeLabs\Exceptional;
-use DecodeLabs\Genesis\Bootstrap;
-use DecodeLabs\Genesis\Bootstrap\Seamless as SeamlessBootstrap;
 use DecodeLabs\Genesis\Build\Strategy;
+use DecodeLabs\Monarch;
 use DecodeLabs\Terminus\Session;
 
 class Seamless implements Strategy
 {
-    protected SeamlessBootstrap $bootstrap;
-
-    public function __construct(
-        Bootstrap $bootstrap
-    ) {
-        if (!$bootstrap instanceof SeamlessBootstrap) {
-            throw Exceptional::InvalidArgument('Bootstrap must be Seamless');
-        }
-
-        $this->bootstrap = $bootstrap;
-    }
+    public const string RunDir = 'data/local/run';
+    public const string BuildPrefix = 'build';
+    public const string BuildEntry = 'entry.php';
 
     public function activate(
         Dir $source,
         Session $session
     ): void {
         // Prepare
-        $runDir = Atlas::getDir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
-        $entryName = $this->bootstrap->buildEntry;
+        $runDir = Atlas::getDir(Monarch::getPaths()->root . '/' . self::RunDir);
+        $entryName = self::BuildEntry;
 
-        $runName1 = $this->bootstrap->buildPrefix . '1';
+        $runName1 = self::BuildPrefix . '1';
         $buildDir1 = $runDir->getDir($runName1);
         $entryFile1 = $buildDir1->getFile($entryName);
 
-        $runName2 = $this->bootstrap->buildPrefix . '2';
+        $runName2 = self::BuildPrefix . '2';
         $buildDir2 = $runDir->getDir($runName2);
         $entryFile2 = $buildDir2->getFile($entryName);
 
@@ -99,6 +89,13 @@ class Seamless implements Strategy
         sleep(1);
 
 
+        // Write genesis.php
+        $session->write(' - ');
+        $session->{'.green'}(self::RunDir . '/genesis.php');
+        $this->writeGenesisPhp($runDir);
+
+
+
         // Enable entry file
         $session->write(' - ');
         $session->{'white|dim'}($targetName . '/' . $entryName . '.disabled');
@@ -119,22 +116,68 @@ class Seamless implements Strategy
         }
     }
 
+    protected function writeGenesisPhp(
+        Dir $runDir,
+    ): void {
+        $entry = self::BuildEntry;
+        $prefix = self::BuildPrefix;
+
+        $runDir->getFile('genesis.php')->putContents(
+            <<<PHP
+            <?php
+
+            /**
+             * @package Fabric Seamless Bootstrap
+             * @license http://opensource.org/licenses/MIT
+             */
+
+            declare(strict_types=1);
+
+            \$args = \$_SERVER['argv'] ?? [];
+
+            if(in_array('--from-source', \$args)) {
+                return false;
+            }
+
+            if (file_exists(__DIR__.'/{$prefix}1/{$entry}')) {
+                require_once __DIR__.'/{$prefix}1/{$entry}';
+                return true;
+            }
+
+            if (file_exists(__DIR__.'/{$prefix}2/{$entry}')) {
+                require_once __DIR__.'/{$prefix}2/{$entry}';
+                return true;
+            }
+
+            return false;
+            PHP
+        );
+    }
+
 
     public function clear(
         Session $session
     ): void {
-        $runDir = Atlas::getDir($this->bootstrap->rootPath . '/' . $this->bootstrap->runDir);
-        $entryName = $this->bootstrap->buildEntry;
+        $runDir = Atlas::getDir(Monarch::getPaths()->root . '/' . self::RunDir);
+        $entryName = self::BuildEntry;
 
-        $runName1 = $this->bootstrap->buildPrefix . '1';
+        $runName1 = self::BuildPrefix . '1';
         $buildDir1 = $runDir->getDir($runName1);
         $entryFile1 = $buildDir1->getFile($entryName);
 
-        $runName2 = $this->bootstrap->buildPrefix . '2';
+        $runName2 = self::BuildPrefix . '2';
         $buildDir2 = $runDir->getDir($runName2);
         $entryFile2 = $buildDir2->getFile($entryName);
 
         $found = false;
+
+        $genesisFile = $runDir->getFile('genesis.php');
+
+        if ($genesisFile->exists()) {
+            $genesisFile->delete();
+            $session->deleteSuccess((string)$genesisFile);
+            $found = true;
+        }
 
 
         if ($entryFile1->exists()) {

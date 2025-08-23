@@ -56,9 +56,9 @@ class Build implements Action
         } else {
             // Run
             if ($request->parameters->asBool('dev')) {
-                $handler->setCompile(false);
+                $handler->compile = false;
             } elseif ($request->parameters->asBool('force')) {
-                $handler->setCompile(true);
+                $handler->compile = true;
             }
 
 
@@ -82,7 +82,7 @@ class Build implements Action
         if (
             !Monarch::getBuild()->compiled ||
             $mode !== RuntimeMode::Cli ||
-            in_array('--fabric-source', Coercion::toArray($_SERVER['argv'] ?? [])) ||
+            in_array('--from-source', Coercion::toArray($_SERVER['argv'] ?? [])) ||
             !class_exists(Systemic::class)
         ) {
             return;
@@ -93,7 +93,7 @@ class Build implements Action
 
         /** @var array<string> */
         $args = $_SERVER['argv'] ?? [];
-        $args[] = '--fabric-source';
+        $args[] = '--from-source';
 
         $systemic = $kingdom->getService(Systemic::class);
         $systemic->runScript($args);

@@ -25,6 +25,7 @@ use Generator;
 trait ManifestTrait
 {
     public function __construct(
+        protected(set) Strategy $strategy,
         protected Archetype $archetype
     ) {
     }

@@ -10,14 +10,11 @@ declare(strict_types=1);
 namespace DecodeLabs\Genesis\Build;
 
 use DecodeLabs\Atlas\Dir;
-use DecodeLabs\Genesis\Bootstrap;
 use DecodeLabs\Terminus\Session;
 
 interface Strategy
 {
-    public function __construct(
-        Bootstrap $bootstrap
-    );
+    public const string BuildEntry = 'entry.php';
 
     public function activate(
         Dir $buildDir,

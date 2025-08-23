@@ -9,19 +9,18 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Genesis;
 
-use DecodeLabs\Fluidity\Cast;
 use DecodeLabs\Genesis;
 use DecodeLabs\Genesis\Build\Manifest as BuildManifest;
 use DecodeLabs\Genesis\Environment\Config as EnvConfig;
 use DecodeLabs\Kingdom;
 
-interface Hub extends Cast
+interface Hub
 {
     public ?BuildManifest $buildManifest { get; }
 
     public function __construct(
         Genesis $service,
-        Bootstrap $bootstrap
+        ?AnalysisMode $analysisMode = null
     );
 
     public function initializeLoaders(): void;

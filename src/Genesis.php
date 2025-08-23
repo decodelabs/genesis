@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace DecodeLabs;
 
-use DecodeLabs\Genesis\Bootstrap;
+use DecodeLabs\Genesis\AnalysisMode;
 use DecodeLabs\Genesis\Build;
 use DecodeLabs\Genesis\Build\Handler as BuildHandler;
 use DecodeLabs\Genesis\Environment;
@@ -22,7 +22,6 @@ class Genesis implements Service
 {
     use ServiceTrait;
 
-    public protected(set) Bootstrap $bootstrap;
     public protected(set) Hub $hub;
     public protected(set) Environment $environment;
     public protected(set) Build $build;
@@ -39,7 +38,6 @@ class Genesis implements Service
                 $this->buildHandler = new Slingshot(
                     types: [
                         $manifest,
-                        $this->bootstrap
                     ]
                 )->resolveInstance(BuildHandler::class);
             }
@@ -48,34 +46,28 @@ class Genesis implements Service
         }
     }
 
-    public function __construct()
-    {
+    public protected(set) Kingdom $kingdom;
+
+    public function __construct(
+        string $rootPath,
+        string $hubClass,
+        ?AnalysisMode $analysisMode = null
+    ) {
+        // Default environment
         $this->environment = new Environment(
             new DevelopmentConfig()
         );
-    }
-
-
-    public function bootstrap(
-        Bootstrap $bootstrap
-    ): Kingdom {
-        if (isset($this->bootstrap)) {
-            throw Exceptional::Setup(
-                message: 'Context has already been initialized'
-            );
-        }
 
         // Start time
         Monarch::setStartTime(microtime(true));
 
         // Bootstrap
-        $this->bootstrap = $bootstrap;
         $paths = Monarch::getPaths();
-        $paths->root = $this->bootstrap->rootPath;
+        $paths->root = $rootPath;
 
         // Load hub
-        $class = new Archetype()->resolve(Hub::class, $bootstrap->hubClass);
-        $this->hub = new $class($this, $bootstrap);
+        $class = new Archetype()->resolve(Hub::class, $hubClass);
+        $this->hub = new $class($this, $analysisMode);
 
         // Build info
         $this->build = $this->hub->loadBuild();
@@ -92,20 +84,16 @@ class Genesis implements Service
         // Platform
         $this->hub->initializePlatform();
 
-        // Kingdom
-        $kingdom = $this->hub->loadKingdom();
-        $kingdom->container->set(self::class, $this);
-        Monarch::setKingdom($kingdom);
-        $kingdom->initialize();
-
-        return $kingdom;
+        // Load kingdom
+        $this->kingdom = $this->hub->loadKingdom();
+        $this->kingdom->container->set(self::class, $this);
+        Monarch::setKingdom($this->kingdom);
+        $this->kingdom->initialize();
     }
 
-    public function bootstrapAndRun(
-        Bootstrap $bootstrap
-    ): void {
-        $kingdom = $this->bootstrap($bootstrap);
-        $kingdom->run();
-        $kingdom->shutdown();
+    public function run(): void
+    {
+        $this->kingdom->run();
+        $this->kingdom->shutdown();
     }
 }

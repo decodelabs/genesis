@@ -11,11 +11,14 @@ namespace DecodeLabs\Genesis\Build;
 
 use DecodeLabs\Atlas\Dir;
 use DecodeLabs\Atlas\File;
+use DecodeLabs\Genesis\Hub;
 use DecodeLabs\Terminus\Session;
 use Generator;
 
 interface Manifest
 {
+    public Strategy $strategy { get; }
+
     public function getCliSession(): Session;
     public function generateBuildId(): string;
     public function getBuildTempDir(): Dir;
@@ -37,9 +40,13 @@ interface Manifest
         Package $package
     ): Generator;
 
+    /**
+     * @param class-string<Hub> $hubClass
+     */
     public function writeEntryFile(
         File $file,
-        string $buildId
+        string $buildId,
+        string $hubClass
     ): void;
 
     /**

@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Genesis\Bootstrap;
+namespace DecodeLabs\Genesis;
 
-require_once __DIR__ . '/Bin.php';
-
-class Analysis extends Bin
+enum AnalysisMode
 {
+    case Library;
+    case Project;
 }

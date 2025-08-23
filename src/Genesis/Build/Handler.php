@@ -14,8 +14,7 @@ use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\Dir;
 use DecodeLabs\Atlas\File;
 use DecodeLabs\Exceptional;
-use DecodeLabs\Genesis\Bootstrap;
-use DecodeLabs\Genesis\Bootstrap\Buildable;
+use DecodeLabs\Genesis;
 use DecodeLabs\Monarch;
 use Generator;
 use Throwable;
@@ -24,41 +23,13 @@ class Handler
 {
     public protected(set) string $buildId;
     public bool $compile = true;
-    public protected(set) Manifest $manifest;
-    public protected(set) Bootstrap $bootstrap;
 
     public function __construct(
-        Manifest $manifest,
-        Bootstrap $bootstrap,
+        protected(set) Manifest $manifest,
         protected Archetype $archetype
     ) {
-        $this->manifest = $manifest;
-        $this->bootstrap = $bootstrap;
         $this->buildId = $manifest->generateBuildId();
-        $this->compile = $bootstrap instanceof Buildable;
     }
-
-    public function getManifest(): Manifest
-    {
-        return $this->manifest;
-    }
-
-    public function getBuildId(): string
-    {
-        return $this->buildId;
-    }
-
-    public function setCompile(
-        bool $compile
-    ): void {
-        $this->compile = $compile;
-    }
-
-    public function shouldCompile(): bool
-    {
-        return $this->compile;
-    }
-
 
 
     public function run(): void
@@ -66,9 +37,9 @@ class Handler
         $session = $this->manifest->getCliSession();
 
         // Prepare info
-        $buildId = $this->getBuildId();
+        $buildId = $this->buildId;
 
-        if (!$this->shouldCompile()) {
+        if (!$this->compile) {
             $session->info('Builder is running in dev mode, no build folder will be created');
         }
 
@@ -82,7 +53,7 @@ class Handler
         $this->runPreCompileTasks();
 
 
-        if ($this->shouldCompile()) {
+        if ($this->compile) {
             // Compile
             $this->compile();
 
@@ -111,8 +82,6 @@ class Handler
 
     public function compile(): Dir
     {
-        $bootstrap = $this->getBuildableBootstrap();
-
         $session = $this->manifest->getCliSession();
         $session->newLine();
         $session->{'.yellow|italic|dim'}('⇒ Packaging files'); // @ignore-non-ascii
@@ -181,17 +150,19 @@ class Handler
         }
 
 
-
-
         // Create entry
-        $entryName = $bootstrap->buildEntry;
+        $entryName = $this->manifest->strategy::BuildEntry;
         $file = $destination->getFile($entryName . '.disabled');
 
         $session->write(' - ');
         $session->{'cyan'}($entryName);
         $session->{'.white'}(' ' . $entryName);
 
-        $this->manifest->writeEntryFile($file, $this->buildId);
+        $this->manifest->writeEntryFile(
+            file: $file,
+            buildId: $this->buildId,
+            hubClass: get_class(Monarch::getService(Genesis::class)->hub)
+        );
 
         $session->newLine();
         $session->newLine();
@@ -217,8 +188,7 @@ class Handler
         }
 
         // Activate build
-        $strategy = $this->loadStrategy();
-        $strategy->activate($source, $session);
+        $this->manifest->strategy->activate($source, $session);
 
         // Clear caches
         clearstatcache(true);
@@ -281,34 +251,7 @@ class Handler
         $session->newLine();
         $session->{'.yellow|italic|dim'}('⇒ Clearing builds'); // @ignore-non-ascii
 
-        $this->loadStrategy()->clear($session);
-    }
-
-
-    protected function getBuildableBootstrap(): Buildable
-    {
-        if (!($this->bootstrap instanceof Buildable)) {
-            throw Exceptional::Runtime(
-                message: 'Build handler can only be used with buildable bootstrap'
-            );
-        }
-
-        return $this->bootstrap;
-    }
-
-    protected function loadStrategy(): Strategy
-    {
-        $bootstrap = $this->getBuildableBootstrap();
-
-        $class = $this->archetype->resolve(
-            Strategy::class,
-            $bootstrap->buildStrategy
-        );
-
-        return new $class(
-            $bootstrap,
-            $this->manifest
-        );
+        $this->manifest->strategy->clear($session);
     }
 
     /**
