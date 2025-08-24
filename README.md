@@ -50,21 +50,23 @@ interface Hub
 ```
 
 
-## Running the app
+## Bootstrapping
 
-With the necessary interfaces in place, your entry file just requires the following:
+`Genesis` now runs as a composer plugin, automatically generating an entry point for your application when composer updates.
 
-```php
-// Load Bootstrap strategy
-require_once dirname(__DIR__) . '/vendor/decodelabs/genesis/src/Bootstrap/Seamless.php';
+You just need to add your `Hub` class to the `genesis.hub` extra key in your `composer.json` file:
 
-use DecodeLabs\Genesis\Bootstrap\Seamless;
-use My\Hub;
-
-new Seamless(
-    hubClass: Hub::class
-)->run();
+```json
+{
+    "extra": {
+        "genesis": {
+            "hub": "My\\Genesis\\Hub"
+        }
+    }
+}
 ```
+
+You can then point your HTTP server to rewite to `vendor/genesis.php` as your entry point. Genesis takes care of the rest.
 
 
 ## Compiled builds
