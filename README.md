@@ -54,7 +54,7 @@ interface Hub
 
 `Genesis` now runs as a composer plugin, automatically generating an entry point for your application when composer updates.
 
-You just need to add your `Hub` class to the `genesis.hub` extra key in your `composer.json` file:
+You just need to add make sure you have set your composer `type` ('project' for a standalone app, 'library' for a library) and your `Hub` class to the `genesis.hub` extra key in your `composer.json` file:
 
 ```json
 {
