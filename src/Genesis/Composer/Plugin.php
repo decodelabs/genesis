@@ -13,6 +13,7 @@ use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Repository\InstalledRepository;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 
@@ -32,6 +33,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     public function process(
         Event $event
     ): void {
+        $repo = $event->getComposer()->getRepositoryManager()->getLocalRepository();
+        $repo = new InstalledRepository([$repo]);
+        $genesisInstalled = count($repo->findPackagesWithReplacersAndProviders('decodelabs/genesis')) > 0;
+
+        if (!$genesisInstalled) {
+            return;
+        }
+
         $vendor = $event->getComposer()->getConfig()->get('vendor-dir');
         $root = dirname($vendor);
         $package = $event->getComposer()->getPackage();
