@@ -15,7 +15,6 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Exception;
 
 class Plugin implements PluginInterface, EventSubscriberInterface
 {
@@ -44,22 +43,19 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         }
 
         $type = $package->getType();
-
-        if (
-            $type === 'project' &&
-            !is_string($hubClass)
-        ) {
-            throw new Exception('Genesis hub class not found in composer.json extra "genesis.hub"');
-        }
+        $io = $event->getIO();
 
         if (!is_string($hubClass)) {
+            if ($type === 'project') {
+                $io->write('<warning>Genesis hub class not found in composer.json extra "genesis.hub"</warning>');
+            }
+
             return;
         }
 
         $this->generateLoader($root, $vendor, $hubClass);
         $this->generateAnalysisLoader($root, $vendor, $hubClass, $type);
 
-        $io = $event->getIO();
         $io->write('Genesis loader file generated');
     }
 
