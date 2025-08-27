@@ -94,7 +94,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
                 }
             }
 
-            require_once './autoload.php';
+            require_once dirname(__FILE__) . '/autoload.php';
 
             new DecodeLabs\Genesis(
                 rootPath: \$root,
@@ -136,7 +136,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
             declare(strict_types=1);
 
-            require_once './autoload.php';
+            require_once dirname(__FILE__) . '/autoload.php';
 
             new DecodeLabs\Genesis(
                 rootPath: '{$root}',
