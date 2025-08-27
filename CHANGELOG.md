@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Unreleased
+--
+
+---
+
+### [v0.14.4](https://github.com/decodelabs/genesis/commits/v0.14.4) - 27th August 2025
+
 - Switched to using dirname(__FILE__) in generated bootstraps
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.14.3...v0.14.4)
 
 ---
 
