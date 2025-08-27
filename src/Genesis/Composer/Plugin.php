@@ -62,91 +62,22 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             return;
         }
 
-        $this->generateLoader($root, $vendor, $hubClass);
-        $this->generateAnalysisLoader($root, $vendor, $hubClass, $type);
+        require_once __DIR__ . '/Generator.php';
+
+        $generator = new Generator(
+            root: $root,
+            vendor: $vendor,
+            hubClass: $hubClass,
+            type: $type
+        );
+
+        $generator->generateLoader();
+        $generator->generateAnalysisLoader();
 
         $io->write('Genesis loader file generated');
     }
 
-    protected function generateLoader(
-        string $root,
-        string $vendor,
-        string $hubClass
-    ): void {
-        $contents =
-            <<<PHP
-            <?php
 
-            /**
-             * @package Genesis
-             * @license http://opensource.org/licenses/MIT
-             */
-
-            declare(strict_types=1);
-
-            \$root = '{$root}';
-
-            if(file_exists(\$root . '/data/local/run/genesis.php')) {
-                \$output = require_once \$root . '/data/local/run/genesis.php';
-
-                if(\$output !== false) {
-                    return;
-                }
-            }
-
-            require_once dirname(__FILE__) . '/autoload.php';
-
-            new DecodeLabs\Genesis(
-                rootPath: \$root,
-                hubClass: {$hubClass}::class
-            )->run();
-            PHP;
-
-        // Test existing to avoid re-generation
-        if (
-            file_exists($vendor . '/genesis.php') &&
-            file_get_contents($vendor . '/genesis.php') === $contents
-        ) {
-            return;
-        }
-
-        file_put_contents($vendor . '/genesis.php', $contents);
-    }
-
-    protected function generateAnalysisLoader(
-        string $root,
-        string $vendor,
-        string $hubClass,
-        string $type
-    ): void {
-        $mode = match ($type) {
-            'composer-plugin',
-            'library' => 'Library',
-            default => 'Project',
-        };
-
-        $contents =
-            <<<PHP
-            <?php
-
-            /**
-             * @package Genesis
-             * @license http://opensource.org/licenses/MIT
-             */
-
-            declare(strict_types=1);
-
-            require_once dirname(__FILE__) . '/autoload.php';
-
-            new DecodeLabs\Genesis(
-                rootPath: '{$root}',
-                hubClass: {$hubClass}::class,
-                analysisMode: DecodeLabs\Genesis\AnalysisMode::{$mode}
-            );
-            PHP;
-
-        file_put_contents($vendor . '/genesis-analyze.php', $contents);
-    }
 
     public function activate(
         Composer $composer,
