@@ -20,14 +20,14 @@
         "decodelabs/kingdom": "^0.2",
         "decodelabs/monarch": "^0.2",
         "decodelabs/slingshot": "^0.3",
+        "decodelabs/systemic": "^0.12.0",
         "decodelabs/terminus": "^0.14"
     },
     "require-dev": {
         "composer/composer": "^2.0",
 
         "decodelabs/phpstan-decodelabs": "^0.7",
-        "decodelabs/commandment": "^0.3.0",
-        "decodelabs/systemic": "^0.12.0"
+        "decodelabs/commandment": "^0.3.0"
     },
     "autoload": {
         "psr-4": {

@@ -38,7 +38,8 @@ class Build implements Action
 {
     public function __construct(
         protected Session $io,
-        protected Genesis $genesis
+        protected Genesis $genesis,
+        protected Systemic $systemic
     ) {
     }
 
@@ -48,21 +49,13 @@ class Build implements Action
         $this->ensureCliSource();
 
         // Setup controller
-        $handler = $this->genesis->buildHandler;
-
         if ($request->parameters->asBool('clear')) {
-            // Clear
-            $handler->clear();
+            $this->clear();
         } else {
-            // Run
-            if ($request->parameters->asBool('dev')) {
-                $handler->compile = false;
-            } elseif ($request->parameters->asBool('force')) {
-                $handler->compile = true;
-            }
-
-
-            $handler->run();
+            $this->run(
+                dev: $request->parameters->asBool('dev'),
+                force: $request->parameters->asBool('force')
+            );
         }
 
         clearstatcache();
@@ -74,6 +67,58 @@ class Build implements Action
         return true;
     }
 
+    private function clear(): void
+    {
+        $handler = $this->genesis->buildHandler;
+
+        $this->dumpAutoload(optimize: false);
+        $handler->clear();
+    }
+
+    private function run(
+        bool $dev,
+        bool $force
+    ): void {
+        $handler = $this->genesis->buildHandler;
+
+        if ($dev) {
+            $handler->compile = false;
+        } elseif ($force) {
+            $handler->compile = true;
+        }
+
+        $this->dumpAutoload(optimize: true);
+        $handler->run();
+    }
+
+    private function dumpAutoload(
+        bool $optimize
+    ): void {
+        $dir = $this->findComposerDir();
+        $args = ['composer', 'dump-autoload'];
+
+        if ($optimize) {
+            $args[] = '--optimize';
+        }
+
+        $this->systemic->run($args, $dir);
+    }
+
+    protected function findComposerDir(): string
+    {
+        $fallback = $dir = Monarch::getPaths()->working;
+
+        do {
+            if (file_exists($dir . '/composer.json')) {
+                return $dir;
+            }
+
+            $dir = dirname($dir);
+        } while ($dir !== '/');
+
+        return $fallback;
+    }
+
     private function ensureCliSource(): void
     {
         $kingdom = Monarch::getKingdom();
@@ -82,8 +127,7 @@ class Build implements Action
         if (
             !Monarch::getBuild()->compiled ||
             $mode !== RuntimeMode::Cli ||
-            in_array('--from-source', Coercion::toArray($_SERVER['argv'] ?? [])) ||
-            !class_exists(Systemic::class)
+            in_array('--from-source', Coercion::toArray($_SERVER['argv'] ?? []))
         ) {
             return;
         }
@@ -95,8 +139,7 @@ class Build implements Action
         $args = $_SERVER['argv'] ?? [];
         $args[] = '--from-source';
 
-        $systemic = $kingdom->getService(Systemic::class);
-        $systemic->runScript($args);
+        $this->systemic->runScript($args);
         exit(0);
     }
 }
