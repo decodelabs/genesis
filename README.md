@@ -16,6 +16,8 @@ Genesis provides everything you need to bootstrap your application at runtime. T
 
 ## Installation
 
+This package requires PHP 8.4 or higher.
+
 Install via Composer:
 
 ```bash
