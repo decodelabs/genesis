@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package Genesis
- * @license http://opensource.org/licenses/MIT
+ * Genesis
+ * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
@@ -127,8 +127,8 @@ class Seamless implements Strategy
             <?php
 
             /**
-             * @package Fabric Seamless Bootstrap
-             * @license http://opensource.org/licenses/MIT
+             * Fabric Seamless Bootstrap
+             * @license https://opensource.org/licenses/MIT
              */
 
             declare(strict_types=1);

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package Genesis
- * @license http://opensource.org/licenses/MIT
+ * Genesis
+ * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
