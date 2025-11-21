@@ -2,14 +2,18 @@
     "name": "decodelabs/genesis",
     "description": "Universal bootstrapping framework",
     "type": "composer-plugin",
-    "keywords": [ "bootstrap", "framework", "entry" ],
+    "keywords": [
+        "bootstrap",
+        "framework",
+        "entry"
+    ],
     "license": "MIT",
-    "authors": [ {
+    "authors": [
+        {
             "name": "Tom Wright",
             "email": "tom@inflatablecookie.com"
-        } ],
-    "repositories": {
-    },
+        }
+    ],
     "require": {
         "php": "^8.4",
         "composer-plugin-api": "^2.0",
@@ -26,8 +30,9 @@
     "require-dev": {
         "composer/composer": "^2.0",
 
-        "decodelabs/phpstan-decodelabs": "^0.7",
-        "decodelabs/commandment": "^0.3.0"
+        "decodelabs/chorus": "^0.1",
+        "decodelabs/commandment": "^0.3.0",
+        "decodelabs/phpstan-decodelabs": "^0.7"
     },
     "autoload": {
         "psr-4": {
