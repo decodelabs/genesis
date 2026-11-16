@@ -5,11 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Unreleased
+--
+
+---
+
+### [v0.14.8](https://github.com/decodelabs/genesis/commits/v0.14.8) - 16th November 2026
+
 - Made public read visibility explicit on promoted properties
 - Improved doc comment headers
 - Added AGENTS.md
 - Integrated Chorus dev dependency
 - Simplified CI workflow
+
+[Full list of changes](https://github.com/decodelabs/genesis/compare/v0.14.7...v0.14.8)
 
 ---
 
@@ -415,4 +423,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [v0.1.0](https://github.com/decodelabs/genesis/commits/v0.1.0) - 29th September 2022
 
 - Built initial codebase
-
