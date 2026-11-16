@@ -25,7 +25,7 @@ class Handler
     public bool $compile = true;
 
     public function __construct(
-        protected(set) Manifest $manifest,
+        public protected(set) Manifest $manifest,
         protected Archetype $archetype
     ) {
         $this->buildId = $manifest->generateBuildId();
